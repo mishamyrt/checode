@@ -1,8 +1,6 @@
 package types
 
-// STOPSHIP: Add real description
-
-// Match lol
+// Match result
 type Match struct {
 	Keyword string
 	Line    int
