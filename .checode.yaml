@@ -1,0 +1,6 @@
+keywords:
+  FIXME: 'err'
+  TODO: 'warn'
+  todo: 'err'
+  STOPSHIP: 'err'
+  CUSTOM: 'print'
