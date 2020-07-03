@@ -11,6 +11,7 @@ import (
 func matchKeyword(s *string, kk *[]string, line int) (match types.Match) {
 	var index int
 	for _, k := range *kk {
+		// fmt.Println(*s)
 		index = strings.Index(*s, k+":")
 		if index > -1 {
 			match.Keyword = k

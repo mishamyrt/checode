@@ -10,7 +10,7 @@ import (
 )
 
 func exit(success bool) {
-	var exitCode = 0
+	exitCode := 0
 	if !success {
 		exitCode = 1
 	}
@@ -18,16 +18,16 @@ func exit(success bool) {
 }
 
 func main() {
-	config := configuration.GetConfiguration()
-	var keywords = configuration.ExtractKeywords(&config)
-
+	var paths []string
+	success := true
 	requestedPaths := os.Args[1:]
+
+	config := configuration.GetConfiguration()
+	keywords := configuration.ExtractKeywords(&config)
 
 	if len(requestedPaths) == 0 {
 		requestedPaths = append(requestedPaths, ".")
 	}
-
-	var paths []string
 
 	for _, path := range requestedPaths {
 		files, _ := files.GetFiles(path)
@@ -35,8 +35,6 @@ func main() {
 			paths = append(paths, files...)
 		}
 	}
-
-	success := true
 
 	// TODO: Process files asynchronously
 	for _, path := range paths {

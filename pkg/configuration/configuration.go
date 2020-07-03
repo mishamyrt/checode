@@ -56,7 +56,7 @@ func ExtractKeywords(keywordList *types.KeywordList) []string {
 // GetConfiguration returns keyword list with levels
 func GetConfiguration() types.KeywordList {
 	var config types.Configuration
-	var keywords = defaultConfiguration
+	keywords := defaultConfiguration
 
 	for _, path := range ConfigurationPath {
 		if fileExists(path) {

@@ -10,9 +10,10 @@ import (
 
 // PrintMatch to stdout
 func PrintMatch(path string, matches []types.Match, rules types.KeywordList) bool {
-	var result = colors.Underline(fmt.Sprintln(path))
-	success := true
 	var kw string
+	result := colors.Underline(fmt.Sprintln(path))
+	success := true
+
 	for _, match := range matches {
 		result += colors.Grey(fmt.Sprintf("  %-4s", strconv.Itoa(match.Line)))
 		switch rules[match.Keyword] {
