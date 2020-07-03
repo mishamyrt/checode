@@ -7,8 +7,8 @@ import (
 )
 
 // GetFiles collects files from given folder recursively
-func GetFiles(path string) (paths []string, err error) {
-	err = filepath.Walk(path,
+func GetFiles(path string) (paths []string) {
+	filepath.Walk(path,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err

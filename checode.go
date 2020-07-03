@@ -21,8 +21,20 @@ func main() {
 	config := configuration.GetConfiguration()
 	var keywords = configuration.ExtractKeywords(&config)
 
-	// TODO: Use directory from args
-	paths, _ := files.GetFiles(".")
+	requestedPaths := os.Args[1:]
+
+	if len(requestedPaths) == 0 {
+		requestedPaths = append(requestedPaths, ".")
+	}
+
+	var paths []string
+
+	for _, path := range requestedPaths {
+		files := files.GetFiles(path)
+		if len(files) > 0 {
+			paths = append(paths, files...)
+		}
+	}
 
 	success := true
 
