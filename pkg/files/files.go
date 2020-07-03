@@ -13,7 +13,7 @@ func GetFiles(path string) (paths []string, err error) {
 			if err != nil {
 				return err
 			}
-			// TODO: Use configuration name from list
+			// FIXME: Use configuration name from list
 			if !info.IsDir() && !strings.HasSuffix(path, ".checode.yaml") {
 				paths = append(paths, path)
 			}
