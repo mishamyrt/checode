@@ -4,7 +4,21 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/mishamyrt/checode/v1/pkg/configuration"
 )
+
+func isAllowedPath(path string) bool {
+	for _, v := range configuration.ConfigurationPath {
+		if strings.HasSuffix(path, v) {
+			return false
+		}
+	}
+	if strings.Contains(path, ".git") {
+		return false
+	}
+	return true
+}
 
 // GetFiles collects files from given folder recursively
 func GetFiles(path string) (paths []string) {
@@ -13,8 +27,7 @@ func GetFiles(path string) (paths []string) {
 			if err != nil {
 				return err
 			}
-			// FIXME: Use configuration name from list
-			if !info.IsDir() && !strings.HasSuffix(path, ".checode.yaml") {
+			if !info.IsDir() && isAllowedPath(path) {
 				paths = append(paths, path)
 			}
 			return nil
