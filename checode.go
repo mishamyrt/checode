@@ -30,7 +30,7 @@ func main() {
 	var paths []string
 
 	for _, path := range requestedPaths {
-		files := files.GetFiles(path)
+		files, _ := files.GetFiles(path)
 		if len(files) > 0 {
 			paths = append(paths, files...)
 		}
