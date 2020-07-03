@@ -3,11 +3,10 @@ package main
 import (
 	"os"
 
-	"github.com/mishamyrt/checode/v1/pkg/config"
+	"github.com/mishamyrt/checode/v1/pkg/configuration"
 	"github.com/mishamyrt/checode/v1/pkg/files"
 	"github.com/mishamyrt/checode/v1/pkg/formatter"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
-	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
 func exit(success bool) {
@@ -19,18 +18,9 @@ func exit(success bool) {
 }
 
 func main() {
-	var configuration types.Configuration
+	config := configuration.GetConfiguration()
+	var keywords = configuration.ExtractKeywords(&config)
 
-	// TODO: Use configuration name from list
-	err := config.ReadFile(".checode.yaml", &configuration)
-	var keywords = config.ExtractKeywords(&configuration.Keywords)
-
-	// FIXME: Add real error handling
-	if err != nil {
-		panic(err)
-	}
-
-	// FIXME: Add error handling
 	// TODO: Use directory from args
 	paths, _ := files.GetFiles(".")
 
@@ -43,7 +33,7 @@ func main() {
 			continue
 		}
 
-		succeeded := formatter.PrintMatch(path, matches, configuration.Keywords)
+		succeeded := formatter.PrintMatch(path, matches, config)
 		success = success && succeeded
 	}
 	exit(success)
