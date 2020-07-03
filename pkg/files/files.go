@@ -14,7 +14,7 @@ func isAllowedPath(path string) bool {
 			return false
 		}
 	}
-	return strings.Contains(path, ".git")
+	return !strings.Contains(path, ".git/")
 }
 
 // GetFiles collects files from given folder recursively
