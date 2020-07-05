@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	colours "github.com/mishamyrt/checode/v1/pkg/colors"
+	"github.com/mishamyrt/checode/v1/pkg/colours"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
