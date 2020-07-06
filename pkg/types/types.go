@@ -1,5 +1,12 @@
 package types
 
+const (
+	// ErrKeyword key
+	ErrKeyword = "err"
+	// WarnKeyword key
+	WarnKeyword = "warn"
+)
+
 // FileMatches is file parsing result
 type FileMatches struct {
 	Matches []Match

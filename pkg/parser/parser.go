@@ -32,16 +32,16 @@ func Parse(filePaths []string) bool {
 		go parseFile(path, &keywords, matchesChan, &wg)
 	}
 
-	for i := range matchesChan {
+	for r := range matchesChan {
 		processedCount++
 		if processedCount == len(filePaths) {
 			close(matchesChan)
 		}
-		if len(i.Matches) == 0 {
+		if len(r.Matches) == 0 {
 			continue
 		}
-		stdout.PrintMatch(i.Path, i.Matches)
-		success = success && i.Success
+		stdout.PrintMatch(r.Path, r.Matches)
+		success = success && r.Success
 	}
 	wg.Wait()
 	return success

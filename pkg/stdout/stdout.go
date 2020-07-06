@@ -4,28 +4,41 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/mishamyrt/checode/v1/pkg/colours"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-// PrintMatch to stdout
-func PrintMatch(path string, matches []types.Match) {
-	var kw string
-	result := colours.Underline(fmt.Sprintln(path))
+func line(n int) string {
+	return grey(fmt.Sprintf("  %-4s", strconv.Itoa(n)))
+}
 
-	for _, match := range matches {
-		result += colours.Grey(fmt.Sprintf("  %-4s", strconv.Itoa(match.Line)))
-		switch match.Level {
-		case "err":
-			kw = colours.Red(match.Keyword)
-		case "warn":
-			kw = colours.Yellow(match.Keyword)
-		default:
-			kw = colours.Blue(match.Keyword)
-		}
-		result += fmt.Sprintf("%18s", kw)
-		result += fmt.Sprintf("  %s", match.Message)
-		result += "\n"
+func path(p string) string {
+	return underline(fmt.Sprintln(p))
+}
+
+func keyword(k string, level string) string {
+	var kw string
+	switch level {
+	case types.ErrKeyword:
+		kw = red(k)
+	case types.WarnKeyword:
+		kw = yellow(k)
+	default:
+		kw = blue(k)
 	}
-	fmt.Println(result)
+	return fmt.Sprintf("%18s", kw)
+}
+
+func message(m string) string {
+	return fmt.Sprintf("  %s", m)
+}
+
+// PrintMatch to stdout
+func PrintMatch(p string, matches []types.Match) {
+	result := path(p)
+	for _, match := range matches {
+		result += line(match.Line)
+		result += keyword(match.Keyword, match.Level)
+		result += message(match.Message)
+	}
+	fmt.Printf("%s\n\n", result)
 }

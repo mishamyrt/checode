@@ -12,9 +12,9 @@ import (
 var ConfigPaths = []string{".checode.yml", ".checode.yaml"}
 
 var defaultConfig = types.Keywords{
-	"FIXME":    "err",
-	"STOPSHIP": "err",
-	"TODO":     "warn",
+	"FIXME":    types.ErrKeyword,
+	"STOPSHIP": types.ErrKeyword,
+	"TODO":     types.WarnKeyword,
 }
 
 func fileExists(filename string) bool {
