@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/mishamyrt/checode/v1/pkg/configuration"
-	"github.com/mishamyrt/checode/v1/pkg/files"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 	"github.com/mishamyrt/checode/v1/pkg/stdout"
 )
@@ -29,7 +28,7 @@ func main() {
 	}
 
 	for _, path := range requestedPaths {
-		files, _ := files.GetFiles(path)
+		files, _ := parser.GetFiles(path)
 		if len(files) > 0 {
 			paths = append(paths, files...)
 		}
