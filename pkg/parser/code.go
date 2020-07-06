@@ -23,8 +23,7 @@ func matchKeyword(s string, kl *types.KeywordList, line int) (match types.Match)
 	return
 }
 
-// ParseFile given code
-func ParseFile(path string, keywordList *types.KeywordList, c chan types.FileMatches, wg *sync.WaitGroup) {
+func parseFile(path string, keywordList *types.KeywordList, c chan types.FileMatches, wg *sync.WaitGroup) {
 	var matches []types.Match
 	success := true
 	defer wg.Done()

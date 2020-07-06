@@ -26,7 +26,7 @@ func Parse(filePaths []string) bool {
 
 	wg.Add(len(filePaths))
 	for _, path := range filePaths {
-		go ParseFile(path, &config, c, &wg)
+		go parseFile(path, &config, c, &wg)
 	}
 
 	for i := range c {
