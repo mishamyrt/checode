@@ -44,15 +44,6 @@ func merge(a types.KeywordList, b types.KeywordList) types.KeywordList {
 	return a
 }
 
-// ExtractKeywords from given list
-func ExtractKeywords(keywordList *types.KeywordList) []string {
-	keys := make([]string, 0, len(*keywordList))
-	for k := range *keywordList {
-		keys = append(keys, k)
-	}
-	return keys
-}
-
 // GetConfiguration returns keyword list with levels
 func GetConfiguration() types.KeywordList {
 	var config types.Configuration

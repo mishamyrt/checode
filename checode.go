@@ -23,7 +23,6 @@ func main() {
 	requestedPaths := os.Args[1:]
 
 	config := configuration.GetConfiguration()
-	keywords := configuration.ExtractKeywords(&config)
 
 	if len(requestedPaths) == 0 {
 		requestedPaths = append(requestedPaths, ".")
@@ -38,13 +37,12 @@ func main() {
 
 	// TODO: Process files asynchronously
 	for _, path := range paths {
-		matches := parser.Parse(path, &keywords)
+		matches, fileSuccess := parser.Parse(path, &config)
 		if len(matches) == 0 {
 			continue
 		}
-
-		succeeded := formatter.PrintMatch(path, matches, config)
-		success = success && succeeded
+		formatter.PrintMatch(path, matches, &config)
+		success = success && fileSuccess
 	}
 	exit(success)
 }

@@ -8,9 +8,9 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func matchKeyword(s string, kk *[]string, line int) (match types.Match) {
+func matchKeyword(s string, kl *types.KeywordList, line int) (match types.Match) {
 	var index int
-	for _, k := range *kk {
+	for k := range *kl {
 		index = strings.Index(s, k+":")
 		if index > -1 {
 			match.Keyword = k
@@ -23,10 +23,12 @@ func matchKeyword(s string, kk *[]string, line int) (match types.Match) {
 }
 
 // Parse given code
-func Parse(path string, keywords *[]string) (matches []types.Match) {
+func Parse(path string, keywordList *types.KeywordList) (matches []types.Match, success bool) {
+	success = true
+
 	file, err := os.Open(path)
 	if err != nil {
-		return nil
+		return nil, false
 	}
 
 	defer file.Close()
@@ -35,9 +37,10 @@ func Parse(path string, keywords *[]string) (matches []types.Match) {
 	line := 0
 	for scanner.Scan() {
 		line++
-		match := matchKeyword(scanner.Text(), keywords, line)
-		if len(match.Message) > 0 {
+		match := matchKeyword(scanner.Text(), keywordList, line)
+		if len(match.Keyword) > 0 {
 			matches = append(matches, match)
+			success = success && (*keywordList)[match.Keyword] != "err"
 		}
 	}
 	return

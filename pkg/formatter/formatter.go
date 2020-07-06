@@ -9,17 +9,15 @@ import (
 )
 
 // PrintMatch to stdout
-func PrintMatch(path string, matches []types.Match, rules types.KeywordList) bool {
+func PrintMatch(path string, matches []types.Match, rules *types.KeywordList) {
 	var kw string
 	result := colours.Underline(fmt.Sprintln(path))
-	success := true
 
 	for _, match := range matches {
 		result += colours.Grey(fmt.Sprintf("  %-4s", strconv.Itoa(match.Line)))
-		switch rules[match.Keyword] {
+		switch (*rules)[match.Keyword] {
 		case "err":
 			kw = colours.Red(match.Keyword)
-			success = false
 		case "warn":
 			kw = colours.Yellow(match.Keyword)
 		default:
@@ -30,6 +28,4 @@ func PrintMatch(path string, matches []types.Match, rules types.KeywordList) boo
 		result += "\n"
 	}
 	fmt.Println(result)
-	// TODO: Move status handling outside formatter
-	return success
 }
