@@ -3,6 +3,7 @@ package types
 // Match result
 type Match struct {
 	Keyword string
+	Level   string
 	Line    int
 	Message string
 }

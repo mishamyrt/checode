@@ -39,8 +39,9 @@ func Parse(path string, keywordList *types.KeywordList) (matches []types.Match, 
 		line++
 		match := matchKeyword(scanner.Text(), keywordList, line)
 		if len(match.Keyword) > 0 {
+			match.Level = (*keywordList)[match.Keyword]
 			matches = append(matches, match)
-			success = success && (*keywordList)[match.Keyword] != "err"
+			success = success && match.Level != "err"
 		}
 	}
 	return

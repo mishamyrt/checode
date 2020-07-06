@@ -9,13 +9,13 @@ import (
 )
 
 // PrintMatch to stdout
-func PrintMatch(path string, matches []types.Match, rules *types.KeywordList) {
+func PrintMatch(path string, matches []types.Match) {
 	var kw string
 	result := colours.Underline(fmt.Sprintln(path))
 
 	for _, match := range matches {
 		result += colours.Grey(fmt.Sprintf("  %-4s", strconv.Itoa(match.Line)))
-		switch (*rules)[match.Keyword] {
+		switch match.Level {
 		case "err":
 			kw = colours.Red(match.Keyword)
 		case "warn":

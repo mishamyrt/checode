@@ -41,7 +41,7 @@ func main() {
 		if len(matches) == 0 {
 			continue
 		}
-		stdout.PrintMatch(path, matches, &config)
+		stdout.PrintMatch(path, matches)
 		success = success && fileSuccess
 	}
 	exit(success)
