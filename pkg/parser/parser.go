@@ -19,6 +19,11 @@ func Parse(filePaths []string) bool {
 	config := configuration.GetConfiguration()
 	filePaths = paths.CollectPaths(filePaths)
 
+	if len(filePaths) == 0 {
+		close(c)
+		return true
+	}
+
 	wg.Add(len(filePaths))
 	for _, path := range filePaths {
 		go ParseFile(path, &config, c, &wg)

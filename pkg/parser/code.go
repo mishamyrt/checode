@@ -27,6 +27,7 @@ func matchKeyword(s string, kl *types.KeywordList, line int) (match types.Match)
 func ParseFile(path string, keywordList *types.KeywordList, c chan types.FileMatches, wg *sync.WaitGroup) {
 	var matches []types.Match
 	success := true
+	defer wg.Done()
 
 	file, err := os.Open(path)
 	if err != nil {
@@ -34,7 +35,6 @@ func ParseFile(path string, keywordList *types.KeywordList, c chan types.FileMat
 	}
 
 	defer file.Close()
-	defer wg.Done()
 
 	scanner := bufio.NewScanner(file)
 	line := 0
