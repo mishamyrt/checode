@@ -34,7 +34,6 @@ func Parse(filePaths []string) bool {
 		}
 		stdout.PrintMatch(i.Path, i.Matches)
 		success = success && i.Success
-		return success
 	}
 	wg.Wait()
 	return success
