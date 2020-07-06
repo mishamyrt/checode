@@ -15,10 +15,10 @@ type Match struct {
 	Message string
 }
 
-// KeywordList map of keyword with error level
-type KeywordList map[string]string
+// Keywords map of keyword with error level
+type Keywords map[string]string
 
-// Configuration is list with keywords and error levels
-type Configuration struct {
-	Keywords KeywordList
+// Config is list with keywords and error levels
+type Config struct {
+	Keywords Keywords
 }

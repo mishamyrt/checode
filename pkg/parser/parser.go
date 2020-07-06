@@ -3,7 +3,7 @@ package parser
 import (
 	"sync"
 
-	"github.com/mishamyrt/checode/v1/pkg/configuration"
+	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
 	"github.com/mishamyrt/checode/v1/pkg/stdout"
 	"github.com/mishamyrt/checode/v1/pkg/types"
@@ -12,27 +12,30 @@ import (
 // Parse given paths
 func Parse(filePaths []string) bool {
 	var wg sync.WaitGroup
-	success := true
-	processedCount := 0
-	c := make(chan types.FileMatches)
+	var processedCount = 0
+	var success = true
+	var matchesChan = make(chan types.FileMatches)
 
-	config := configuration.GetConfiguration()
+	keywords := config.GetKeywords()
 	filePaths = paths.CollectPaths(filePaths)
 
+	// Early exit if none
 	if len(filePaths) == 0 {
-		close(c)
+		close(matchesChan)
 		return true
 	}
 
+	// Fill work group with paths length
 	wg.Add(len(filePaths))
+
 	for _, path := range filePaths {
-		go parseFile(path, &config, c, &wg)
+		go parseFile(path, &keywords, matchesChan, &wg)
 	}
 
-	for i := range c {
+	for i := range matchesChan {
 		processedCount++
 		if processedCount == len(filePaths) {
-			close(c)
+			close(matchesChan)
 		}
 		if len(i.Matches) == 0 {
 			continue

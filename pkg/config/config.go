@@ -1,4 +1,4 @@
-package configuration
+package config
 
 import (
 	"io/ioutil"
@@ -8,10 +8,10 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// ConfigurationPath is allowed configuration file names
-var ConfigurationPath = []string{".checode.yml", ".checode.yaml"}
+// ConfigPaths is allowed configuration file names
+var ConfigPaths = []string{".checode.yml", ".checode.yaml"}
 
-var defaultConfiguration = types.KeywordList{
+var defaultConfig = types.Keywords{
 	"FIXME":    "err",
 	"STOPSHIP": "err",
 	"TODO":     "warn",
@@ -37,26 +37,26 @@ func readYaml(filePath string, storage interface{}) error {
 	return parse(data, storage)
 }
 
-func merge(a types.KeywordList, b types.KeywordList) types.KeywordList {
-	for k := range b {
-		a[k] = b[k]
+func merge(a types.Keywords, b *types.Keywords) types.Keywords {
+	for k := range *b {
+		a[k] = (*b)[k]
 	}
 	return a
 }
 
-// GetConfiguration returns keyword list with levels
-func GetConfiguration() types.KeywordList {
-	var config types.Configuration
-	keywords := defaultConfiguration
+// GetKeywords returns keyword list with levels
+func GetKeywords() types.Keywords {
+	var config types.Config
+	keywords := defaultConfig
 
-	for _, path := range ConfigurationPath {
+	for _, path := range ConfigPaths {
 		if fileExists(path) {
 			err := readYaml(path, &config)
 			if err != nil {
 				continue
 			}
-			keywords = merge(keywords, config.Keywords)
+			keywords = merge(keywords, &config.Keywords)
 		}
 	}
-	return defaultConfiguration
+	return keywords
 }

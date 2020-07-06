@@ -5,11 +5,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mishamyrt/checode/v1/pkg/configuration"
+	"github.com/mishamyrt/checode/v1/pkg/config"
 )
 
 func isAllowedPath(path string) bool {
-	for _, v := range configuration.ConfigurationPath {
+	for _, v := range config.ConfigPaths {
 		if strings.HasSuffix(path, v) {
 			return false
 		}

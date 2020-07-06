@@ -9,23 +9,26 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func matchKeyword(s string, kl *types.KeywordList, line int) (match types.Match) {
+func matchKeyword(s string, keywords *types.Keywords, line int) types.Match {
 	var index int
-	for k := range *kl {
-		index = strings.Index(s, k+":")
+	for keyword := range *keywords {
+		index = strings.Index(s, keyword+":")
 		if index > -1 {
-			match.Keyword = k
-			match.Line = line
-			match.Message = s[index+len(k)+1:]
-			return
+			return types.Match{
+				Keyword: keyword,
+				Line:    line,
+				Message: strings.Trim(s[index+len(keyword)+1:], " "),
+			}
 		}
 	}
-	return
+	return types.Match{}
 }
 
-func parseFile(path string, keywordList *types.KeywordList, c chan types.FileMatches, wg *sync.WaitGroup) {
+func parseFile(path string, keywords *types.Keywords, c chan types.FileMatches, wg *sync.WaitGroup) {
 	var matches []types.Match
-	success := true
+	var success = true
+	var line = 0
+
 	defer wg.Done()
 
 	file, err := os.Open(path)
@@ -36,16 +39,16 @@ func parseFile(path string, keywordList *types.KeywordList, c chan types.FileMat
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-	line := 0
 	for scanner.Scan() {
 		line++
-		match := matchKeyword(scanner.Text(), keywordList, line)
+		match := matchKeyword(scanner.Text(), keywords, line)
 		if len(match.Keyword) > 0 {
-			match.Level = (*keywordList)[match.Keyword]
+			match.Level = (*keywords)[match.Keyword]
 			matches = append(matches, match)
 			success = success && match.Level != "err"
 		}
 	}
+
 	c <- types.FileMatches{
 		Matches: matches,
 		Success: success,
