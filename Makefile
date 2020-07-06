@@ -18,17 +18,17 @@ clear:
 lint:
 	golangci-lint run -E lll -E misspell -E prealloc -E stylecheck -E gocritic
 
-dist/checode_darwin64: dist
+dist/checode_darwin64:
 	env GOOS=darwin \
 		GOARCH=amd64 \
-		$(GO_FLAGS) $(GC) -o dist/checode_darwin $(ENTRYPOINT)
+		$(GO_FLAGS) $(GC) -o dist/checode_darwin64 $(ENTRYPOINT)
 
-dist/checode_linux64: dist
+dist/checode_linux64:
 	env GOOS=linux \
 		GOARCH=amd64 \
 		$(GO_FLAGS) $(GC) -o dist/checode_linux64 $(ENTRYPOINT)
 
-dist/checode_windows64.exe: dist
+dist/checode_windows64.exe:
 	env GOOS=windows \
 		GOARCH=amd64 \
 		$(GO_FLAGS) $(GC) -o dist/checode_windows64.exe $(ENTRYPOINT)

@@ -1,4 +1,4 @@
-package parser
+package paths
 
 import (
 	"os"
@@ -17,8 +17,7 @@ func isAllowedPath(path string) bool {
 	return !strings.Contains(path, ".git/")
 }
 
-// GetFiles collects files from given folder recursively
-func GetFiles(path string) (paths []string, err error) {
+func getFiles(path string) (paths []string, err error) {
 	err = filepath.Walk(path,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
@@ -29,5 +28,20 @@ func GetFiles(path string) (paths []string, err error) {
 			}
 			return nil
 		})
+	return
+}
+
+// CollectPaths of files
+func CollectPaths(paths []string) (result []string) {
+	if len(paths) == 0 {
+		paths = append(paths, ".")
+	}
+
+	for _, path := range paths {
+		files, _ := getFiles(path)
+		if len(files) > 0 {
+			result = append(result, files...)
+		}
+	}
 	return
 }

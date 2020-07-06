@@ -1,5 +1,12 @@
 package types
 
+// FileMatches is file parsing result
+type FileMatches struct {
+	Matches []Match
+	Path    string
+	Success bool
+}
+
 // Match result
 type Match struct {
 	Keyword string

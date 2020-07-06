@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
@@ -22,16 +23,18 @@ func matchKeyword(s string, kl *types.KeywordList, line int) (match types.Match)
 	return
 }
 
-// Parse given code
-func Parse(path string, keywordList *types.KeywordList) (matches []types.Match, success bool) {
-	success = true
+// ParseFile given code
+func ParseFile(path string, keywordList *types.KeywordList, c chan types.FileMatches, wg *sync.WaitGroup) {
+	var matches []types.Match
+	success := true
 
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, false
+		return
 	}
 
 	defer file.Close()
+	defer wg.Done()
 
 	scanner := bufio.NewScanner(file)
 	line := 0
@@ -44,5 +47,9 @@ func Parse(path string, keywordList *types.KeywordList) (matches []types.Match, 
 			success = success && match.Level != "err"
 		}
 	}
-	return
+	c <- types.FileMatches{
+		Matches: matches,
+		Success: success,
+		Path:    path,
+	}
 }
