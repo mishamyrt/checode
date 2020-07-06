@@ -38,8 +38,8 @@ func main() {
 
 	// TODO: Process files asynchronously
 	for _, path := range paths {
-		matches, err := parser.Parse(path, &keywords)
-		if err != nil || len(matches) == 0 {
+		matches := parser.Parse(path, &keywords)
+		if len(matches) == 0 {
 			continue
 		}
 

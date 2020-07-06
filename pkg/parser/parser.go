@@ -8,15 +8,14 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func matchKeyword(s *string, kk *[]string, line int) (match types.Match) {
+func matchKeyword(s string, kk *[]string, line int) (match types.Match) {
 	var index int
 	for _, k := range *kk {
-		// fmt.Println(*s)
-		index = strings.Index(*s, k+":")
+		index = strings.Index(s, k+":")
 		if index > -1 {
 			match.Keyword = k
 			match.Line = line
-			match.Message = (*s)[index+len(k)+1:]
+			match.Message = s[index+len(k)+1:]
 			return
 		}
 	}
@@ -24,25 +23,22 @@ func matchKeyword(s *string, kk *[]string, line int) (match types.Match) {
 }
 
 // Parse given code
-func Parse(path string, keywords *[]string) (matches []types.Match, err error) {
+func Parse(path string, keywords *[]string) (matches []types.Match) {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	line := 0
-	var text string
 	for scanner.Scan() {
 		line++
-		text = scanner.Text()
-		match := matchKeyword(&text, keywords, line)
+		match := matchKeyword(scanner.Text(), keywords, line)
 		if len(match.Message) > 0 {
 			matches = append(matches, match)
 		}
 	}
-	err = scanner.Err()
 	return
 }
