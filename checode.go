@@ -5,8 +5,8 @@ import (
 
 	"github.com/mishamyrt/checode/v1/pkg/configuration"
 	"github.com/mishamyrt/checode/v1/pkg/files"
-	"github.com/mishamyrt/checode/v1/pkg/formatter"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
+	"github.com/mishamyrt/checode/v1/pkg/stdout"
 )
 
 func exit(success bool) {
@@ -41,7 +41,7 @@ func main() {
 		if len(matches) == 0 {
 			continue
 		}
-		formatter.PrintMatch(path, matches, &config)
+		stdout.PrintMatch(path, matches, &config)
 		success = success && fileSuccess
 	}
 	exit(success)
