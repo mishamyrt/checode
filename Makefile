@@ -31,4 +31,4 @@ dist/checode_linux64: dist
 dist/checode_windows64.exe: dist
 	env GOOS=windows \
 		GOARCH=amd64 \
-		$(GO_FLAGS) $(GC) -o dist/checode_linux64 $(ENTRYPOINT)
+		$(GO_FLAGS) $(GC) -o dist/checode_windows64.exe $(ENTRYPOINT)
