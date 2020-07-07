@@ -1,4 +1,4 @@
-package stdout
+package reporters
 
 import (
 	"fmt"
@@ -33,9 +33,9 @@ func message(m string) string {
 }
 
 // PrintMatch to stdout
-func PrintMatch(p string, matches []types.Match) {
-	result := path(p)
-	for _, match := range matches {
+func PrintMatch(m types.FileMatches) {
+	result := path(m.Path)
+	for _, match := range m.Matches {
 		result += line(match.Line)
 		result += keyword(match.Keyword, match.Level)
 		result += message(match.Message)
