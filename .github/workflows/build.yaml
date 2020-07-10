@@ -17,3 +17,6 @@ jobs:
       with:
         name: dist
         path: dist/
+
+    - name: Dockerize
+      run: docker build --pull --target checode . -f ./docker/Dockerfile
