@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/mishamyrt/checode/master/assets/logo@2x.png" width="538px">
 <p>
 
-Checode extracts, collects and reports TODOs and FIXMEs in your code.
+Checode extracts, collects and reports TODOs, FIXMEs and other keywords in your code. If you don't know why you should write a comment, look at the [wiki note](https://github.com/mishamyrt/checode/wiki/Maybe-you-don't-really-want-TODO).
 
 ## Features
 
