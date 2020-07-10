@@ -34,4 +34,4 @@ dist/checode_windows64.exe:
 		$(GO_FLAGS) $(GC) -o dist/checode_windows64.exe $(ENTRYPOINT)
 
 docker-image:
-	docker build --pull --target checode . -f ./docker/Dockerfile
+	docker build --pull --target checode .
