@@ -39,6 +39,7 @@ func PrintMatch(m types.FileMatches) {
 		result += line(match.Line)
 		result += keyword(match.Keyword, match.Level)
 		result += message(match.Message)
+		result += "\n"
 	}
-	fmt.Printf("%s\n\n", result)
+	fmt.Printf("%s\n", result)
 }
