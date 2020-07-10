@@ -17,6 +17,3 @@ jobs:
       with:
         name: dist
         path: dist/
-
-    - name: Dockerize
-      run: make docker-image
