@@ -9,7 +9,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
-    - name: Build installers
+    - name: Build binaries
       run: make
 
     - name: Upload Darwin binary
