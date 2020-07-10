@@ -19,4 +19,4 @@ jobs:
         path: dist/
 
     - name: Dockerize
-      run: docker build --pull --target checode . -f ./docker/Dockerfile
+      run: make docker-image

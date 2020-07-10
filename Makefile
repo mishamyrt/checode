@@ -1,4 +1,4 @@
-.PHONY: lint clear checode
+.PHONY: lint clear docker-image
 
 GC = go build
 GO_FLAGS = CGO_ENABLED=0 GOGC=off
@@ -32,3 +32,6 @@ dist/checode_windows64.exe:
 	env GOOS=windows \
 		GOARCH=amd64 \
 		$(GO_FLAGS) $(GC) -o dist/checode_windows64.exe $(ENTRYPOINT)
+
+docker-image:
+	docker build --pull --target checode . -f ./docker/Dockerfile
