@@ -28,4 +28,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: windows_binary
-        path: dist/checode_windows64
+        path: dist/checode_windows64.exe
