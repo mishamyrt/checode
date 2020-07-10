@@ -4,15 +4,11 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/mishamyrt/checode/v1/pkg/config"
 )
 
 func isAllowedPath(path string) bool {
-	for _, v := range config.ConfigPaths {
-		if strings.HasSuffix(path, v) {
-			return false
-		}
+	if strings.HasSuffix(path, ".yaml") {
+		return false
 	}
 	return !strings.Contains(path, ".git/")
 }

@@ -8,8 +8,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-// ConfigPaths is allowed configuration file names
-var ConfigPaths = []string{".checode.yml", ".checode.yaml"}
+// DefaultConfigPath is allowed configuration file names
+const DefaultConfigPath = ".checode.yaml"
 
 var defaultConfig = types.Keywords{
 	"FIXME":    types.ErrKeyword,
@@ -45,11 +45,13 @@ func merge(a types.Keywords, b *types.Keywords) types.Keywords {
 }
 
 // GetKeywords returns keyword list with levels
-func GetKeywords() types.Keywords {
+func GetKeywords(configPath string) types.Keywords {
 	var config types.Config
+	var configPaths = []string{DefaultConfigPath, configPath}
+
 	keywords := defaultConfig
 
-	for _, path := range ConfigPaths {
+	for _, path := range configPaths {
 		if fileExists(path) {
 			err := readYaml(path, &config)
 			if err != nil {

@@ -3,20 +3,18 @@ package parser
 import (
 	"sync"
 
-	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
 	"github.com/mishamyrt/checode/v1/pkg/reporters"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
 // Parse given paths
-func Parse(filePaths []string) bool {
+func Parse(filePaths []string, keywords types.Keywords) bool {
 	var wg sync.WaitGroup
 	var processedCount = 0
 	var success = true
 	var matchesChan = make(chan types.FileMatches)
 
-	keywords := config.GetKeywords()
 	filePaths = paths.CollectPaths(filePaths)
 
 	// Early exit if none
