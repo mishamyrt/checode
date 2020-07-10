@@ -12,8 +12,20 @@ jobs:
     - name: Build installers
       run: make
 
-    - name: Upload results
+    - name: Upload Darwin binary
       uses: actions/upload-artifact@v1
       with:
-        name: dist
-        path: dist/
+        name: macOS_binary
+        path: dist/checode_darwin64
+
+    - name: Upload Linux binary
+      uses: actions/upload-artifact@v1
+      with:
+        name: linux_binary
+        path: dist/checode_linux64
+
+    - name: Upload Windows binary
+      uses: actions/upload-artifact@v1
+      with:
+        name: windows_binary
+        path: dist/checode_windows64
