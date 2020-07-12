@@ -33,7 +33,7 @@ func colorize(bitmap uint8) func(s string) string {
 func keywords(k []string, bitmap uint8) string {
 	var kw string = strings.Join(k, ": ") + ":"
 	kw = colorize(bitmap)(kw)
-	return fmt.Sprintf("%20s", kw)
+	return fmt.Sprintf("%s", kw)
 }
 
 func message(m string) string {
