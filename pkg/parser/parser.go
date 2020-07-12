@@ -9,7 +9,7 @@ import (
 )
 
 // Parse given paths
-func Parse(filePaths []string, keywords types.Keywords) bool {
+func Parse(filePaths []string, keywords types.Config) bool {
 	var wg sync.WaitGroup
 	var processedCount = 0
 	var success = true

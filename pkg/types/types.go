@@ -22,10 +22,10 @@ type Match struct {
 	Message string
 }
 
-// Keywords map of keyword with error level
-type Keywords map[string]string
+// Config map of keyword with error level
+type Config map[string]string
 
-// Config is list with keywords and error levels
-type Config struct {
-	Keywords Keywords
+// ConfigFile is list with keywords and error levels
+type ConfigFile struct {
+	Keywords Config
 }

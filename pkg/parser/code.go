@@ -9,7 +9,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func matchKeyword(s string, keywords *types.Keywords, line int) types.Match {
+func matchKeyword(s string, keywords *types.Config, line int) types.Match {
 	var index int
 	for keyword := range *keywords {
 		index = strings.Index(s, keyword+":")
@@ -24,7 +24,7 @@ func matchKeyword(s string, keywords *types.Keywords, line int) types.Match {
 	return types.Match{}
 }
 
-func parseFile(path string, keywords *types.Keywords, c chan types.FileMatches, wg *sync.WaitGroup) {
+func parseFile(path string, keywords *types.Config, c chan types.FileMatches, wg *sync.WaitGroup) {
 	var matches []types.Match
 	var success = true
 	var line = 0

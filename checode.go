@@ -5,6 +5,7 @@ import (
 
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
+	"github.com/mishamyrt/checode/v1/pkg/types"
 	"github.com/spf13/pflag"
 )
 
@@ -24,6 +25,7 @@ func init() {
 }
 
 func main() {
-	keywords := config.GetKeywords(configPath)
-	exit(parser.Parse(pflag.Args(), keywords))
+	var currentConfig types.Config = config.GetConfig(configPath)
+
+	exit(parser.Parse(pflag.Args(), currentConfig))
 }
