@@ -5,7 +5,7 @@ import (
 
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
-	"github.com/mishamyrt/checode/v1/pkg/reporters"
+	"github.com/mishamyrt/checode/v1/pkg/stdout"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
@@ -39,7 +39,7 @@ func Parse(filePaths []string, keywords types.Config) bool {
 		if len(r.Matches) == 0 {
 			continue
 		}
-		reporters.PrintMatch(r)
+		stdout.PrintMatch(r)
 		flags |= r.Flags
 	}
 	wg.Wait()

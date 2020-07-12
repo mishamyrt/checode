@@ -16,10 +16,10 @@ const DefaultConfigPath = ".checode.yaml"
 
 // DefaultConfig is a built-in basic configuration
 var DefaultConfig = types.Config{
-	"FIXME":    ErrFlag,
 	"STOPSHIP": ErrFlag,
+	"FIXME":    WarnFlag,
 	"TODO":     WarnFlag,
-	"NOTE":     WarnFlag,
+	"NOTE":     0,
 }
 
 // GetConfig Reads the custom configuration file, then the file along the standard path.
