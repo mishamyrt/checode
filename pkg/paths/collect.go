@@ -9,6 +9,8 @@ import (
 func isAllowedPath(path string) bool {
 	if strings.HasSuffix(path, ".yaml") {
 		return false
+	} else if strings.HasSuffix(path, ".md") {
+		return false
 	}
 	return !strings.Contains(path, ".git/")
 }

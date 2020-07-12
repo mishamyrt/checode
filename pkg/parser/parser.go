@@ -3,6 +3,7 @@ package parser
 import (
 	"sync"
 
+	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
 	"github.com/mishamyrt/checode/v1/pkg/reporters"
 	"github.com/mishamyrt/checode/v1/pkg/types"
@@ -12,7 +13,7 @@ import (
 func Parse(filePaths []string, keywords types.Config) bool {
 	var wg sync.WaitGroup
 	var processedCount = 0
-	var success = true
+	var flags uint8
 	var matchesChan = make(chan types.FileMatches)
 
 	filePaths = paths.CollectPaths(filePaths)
@@ -39,8 +40,8 @@ func Parse(filePaths []string, keywords types.Config) bool {
 			continue
 		}
 		reporters.PrintMatch(r)
-		success = success && r.Success
+		flags |= r.Flags
 	}
 	wg.Wait()
-	return success
+	return (flags & config.ErrFlag) != config.ErrFlag
 }

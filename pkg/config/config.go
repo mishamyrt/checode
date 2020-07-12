@@ -4,14 +4,22 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
+const (
+	// WarnFlag is a flag for warning level
+	WarnFlag = 1
+	// ErrFlag is a flag for error level
+	ErrFlag = 2
+)
+
 // DefaultConfigPath is allowed configuration file names
 const DefaultConfigPath = ".checode.yaml"
 
 // DefaultConfig is a built-in basic configuration
 var DefaultConfig = types.Config{
-	"FIXME":    types.ErrKeyword,
-	"STOPSHIP": types.ErrKeyword,
-	"TODO":     types.WarnKeyword,
+	"FIXME":    ErrFlag,
+	"STOPSHIP": ErrFlag,
+	"TODO":     WarnFlag,
+	"NOTE":     WarnFlag,
 }
 
 // GetConfig Reads the custom configuration file, then the file along the standard path.

@@ -13,7 +13,7 @@ func FormatMarkdown(m types.FileMatches) (result string) {
 	result += "---|---|---\n"
 	for _, match := range m.Matches {
 		result += strconv.Itoa(match.Line) + "| "
-		result += match.Keyword + "| "
+		result += match.Keywords[0] + "| "
 		result += match.Message + "\n"
 	}
 	return

@@ -9,12 +9,40 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const (
+	// ErrKeyword key
+	ErrKeyword = "err"
+	// WarnKeyword key
+	WarnKeyword = "warn"
+)
+
+func parseFlag(value string) uint8 {
+	switch value {
+	case ErrKeyword:
+		return ErrFlag
+	case WarnKeyword:
+		return WarnFlag
+	default:
+		return WarnFlag
+	}
+}
+
+// ParseFlags transforms text map to bit values
+func ParseFlags(config *types.Config, configMap *types.KewordsMap) {
+	for key := range *configMap {
+		(*config)[key] = parseFlag((*configMap)[key])
+	}
+}
+
 // ReadConfigFile reads the configuration from the yaml file
 func ReadConfigFile(path string, config *types.Config) (err error) {
 	if fileExists(path) {
 		var configFile types.ConfigFile
 		err = readYamlConfig(path, &configFile)
-		*config = configFile.Keywords
+		if err != nil {
+			return
+		}
+		ParseFlags(config, &configFile.Keywords)
 	} else {
 		err = errors.New("File doesn't exist")
 	}

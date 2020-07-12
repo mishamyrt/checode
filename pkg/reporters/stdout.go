@@ -3,34 +3,41 @@ package reporters
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
+	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
 func line(n int) string {
-	return grey(fmt.Sprintf("  %-4s", strconv.Itoa(n)))
+	return grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
 }
 
 func path(p string) string {
 	return underline(fmt.Sprintln(p))
 }
 
-func keyword(k string, level string) string {
-	var kw string
-	switch level {
-	case types.ErrKeyword:
-		kw = red(k)
-	case types.WarnKeyword:
-		kw = yellow(k)
-	default:
-		kw = blue(k)
+func isSet(bitmap uint8, flag uint8) bool {
+	return (bitmap & flag) == flag
+}
+
+func colorize(bitmap uint8) func(s string) string {
+	if isSet(bitmap, config.ErrFlag) {
+		return red
+	} else if isSet(bitmap, config.WarnFlag) {
+		return yellow
 	}
-	return fmt.Sprintf("%18s", kw)
+	return blue
+}
+
+func keywords(k []string, bitmap uint8) string {
+	var kw string = strings.Join(k, ": ") + ":"
+	kw = colorize(bitmap)(kw)
+	return fmt.Sprintf("%20s", kw)
 }
 
 func message(m string) string {
-	// TODO: asd
-	return fmt.Sprintf("  %s", m)
+	return fmt.Sprintf(" %s", m)
 }
 
 // PrintMatch to stdout
@@ -38,7 +45,7 @@ func PrintMatch(m types.FileMatches) {
 	result := path(m.Path)
 	for _, match := range m.Matches {
 		result += line(match.Line)
-		result += keyword(match.Keyword, match.Level)
+		result += keywords(match.Keywords, match.Flags)
 		result += message(match.Message)
 		result += "\n"
 	}
