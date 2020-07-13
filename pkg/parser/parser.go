@@ -23,8 +23,6 @@ func Parse(filePaths []string, keywords types.Config) types.ParsingResult {
 		return result
 	}
 
-	// TODO: asd
-
 	// Fill work group with paths length
 	wg.Add(len(filePaths))
 
