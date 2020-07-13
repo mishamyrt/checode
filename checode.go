@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
@@ -34,7 +35,11 @@ func main() {
 	var currentConfig types.Config = config.GetConfig(configPath)
 	parsingResulut := parser.Parse(pflag.Args(), currentConfig)
 	if len(reportFormat) > 0 {
-		reporters.CreateReport(reportFormat, outputFileName, parsingResulut)
+		err := reporters.CreateReport(reportFormat, outputFileName, parsingResulut)
+		if err != nil {
+			fmt.Println(err.Error())
+			exit(false)
+		}
 	}
 	exit(!bit.IsSet(parsingResulut.Flags, config.ErrFlag))
 }

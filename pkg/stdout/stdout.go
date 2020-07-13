@@ -16,10 +16,10 @@ func printPath(p string) string {
 	return underline(fmt.Sprintln(p))
 }
 
-func printKeywords(k []string, bitmap uint8) string {
-	var kw string = strings.Join(k, ": ") + ":"
+func printKeywords(k []string, bitmap uint8) (kw string) {
+	kw = strings.Join(k, ": ") + ":"
 	kw = colorize(bitmap)(kw)
-	return fmt.Sprintf("%s", kw)
+	return
 }
 
 func printMessage(m string) string {
