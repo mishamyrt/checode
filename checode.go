@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 	"github.com/mishamyrt/checode/v1/pkg/types"
@@ -27,5 +28,5 @@ func init() {
 func main() {
 	var currentConfig types.Config = config.GetConfig(configPath)
 	parsingResulut := parser.Parse(pflag.Args(), currentConfig)
-	exit((parsingResulut.Flags & config.ErrFlag) == config.ErrFlag)
+	exit(!bit.IsSet(parsingResulut.Flags, config.ErrFlag))
 }
