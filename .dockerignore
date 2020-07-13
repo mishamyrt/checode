@@ -1,0 +1,7 @@
+dist/
+assets/
+.github/
+README.md
+LICENSE
+Makefile
+.editorconfig
