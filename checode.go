@@ -33,9 +33,8 @@ func init() {
 func main() {
 	var currentConfig types.Config = config.GetConfig(configPath)
 	parsingResulut := parser.Parse(pflag.Args(), currentConfig)
-	switch reportFormat {
-	case "md":
-		reporters.WriteReport(reportFormat, outputFileName, parsingResulut)
+	if len(reportFormat) > 0 {
+		reporters.CreateReport(reportFormat, outputFileName, parsingResulut)
 	}
 	exit(!bit.IsSet(parsingResulut.Flags, config.ErrFlag))
 }

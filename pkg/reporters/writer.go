@@ -1,6 +1,7 @@
 package reporters
 
 import (
+	"errors"
 	"io/ioutil"
 	"time"
 
@@ -14,8 +15,8 @@ func getTimeStamp() string {
 
 // STOPSHIP: Add description
 
-// WriteReport lol
-func WriteReport(extension string, name string, data types.ParsingResult) {
+// CreateReport lol
+func CreateReport(extension string, name string, data types.ParsingResult) error {
 	var reportContent string
 	if len(name) == 0 {
 		name = "report-" + getTimeStamp() + "." + extension
@@ -23,6 +24,8 @@ func WriteReport(extension string, name string, data types.ParsingResult) {
 	switch extension {
 	case "md":
 		reportContent = FormatMarkdown(data)
+	default:
+		return errors.New("Unknown report format")
 	}
-	ioutil.WriteFile(name, []byte(reportContent), 0644)
+	return ioutil.WriteFile(name, []byte(reportContent), 0644)
 }
