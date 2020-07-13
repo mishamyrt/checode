@@ -15,9 +15,6 @@ dist:
 clear:
 	rm -rf dist
 
-lint:
-	golangci-lint run -E lll -E misspell -E prealloc -E stylecheck -E gocritic
-
 dist/checode_darwin64:
 	env GOOS=darwin \
 		GOARCH=amd64 \
