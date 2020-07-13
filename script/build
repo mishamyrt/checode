@@ -1,16 +1,16 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-envs=(
-	CGO_ENABLED=0
-	GOGC=off
-)
+if [ -z "$1" ]; then
+  out_file="dist/checode"
+else
+  out_file="$1"
+fi
 
-go_flags=(
-	-a
-	-installsuffix nocgo
-  -o dist/checode
-)
+envs="CGO_ENABLED=0 GOGC=off"
+go_flags="-a -installsuffix nocgo -o $out_file"
 
 rm -f dist/checode
-env ${envs[@]} go build ${go_flags[@]} checode.go
+
+# Build binary
+env $envs go build $go_flags checode.go
