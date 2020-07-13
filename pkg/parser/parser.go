@@ -3,17 +3,16 @@ package parser
 import (
 	"sync"
 
-	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
 	"github.com/mishamyrt/checode/v1/pkg/stdout"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
 // Parse given paths
-func Parse(filePaths []string, keywords types.Config) bool {
+func Parse(filePaths []string, keywords types.Config) types.ParsingResult {
 	var wg sync.WaitGroup
 	var processedCount = 0
-	var flags uint8
+	var result types.ParsingResult
 	var matchesChan = make(chan types.FileMatches)
 
 	filePaths = paths.CollectPaths(filePaths)
@@ -21,8 +20,10 @@ func Parse(filePaths []string, keywords types.Config) bool {
 	// Early exit if none
 	if len(filePaths) == 0 {
 		close(matchesChan)
-		return true
+		return result
 	}
+
+	// TODO: asd
 
 	// Fill work group with paths length
 	wg.Add(len(filePaths))
@@ -39,9 +40,10 @@ func Parse(filePaths []string, keywords types.Config) bool {
 		if len(r.Matches) == 0 {
 			continue
 		}
+		result.FileMatches = append(result.FileMatches, r)
 		stdout.PrintMatch(r)
-		flags |= r.Flags
+		result.Flags |= r.Flags
 	}
 	wg.Wait()
-	return (flags & config.ErrFlag) != config.ErrFlag
+	return result
 }

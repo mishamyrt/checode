@@ -15,7 +15,7 @@ func printWithCode(s string, c int) string {
 }
 
 func isSet(bitmap uint8, flag uint8) bool {
-	return (bitmap & config.ErrFlag) == config.ErrFlag
+	return (bitmap & flag) == flag
 }
 
 func colorize(bitmap uint8) func(s string) string {

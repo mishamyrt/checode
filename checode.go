@@ -26,6 +26,6 @@ func init() {
 
 func main() {
 	var currentConfig types.Config = config.GetConfig(configPath)
-
-	exit(parser.Parse(pflag.Args(), currentConfig))
+	parsingResulut := parser.Parse(pflag.Args(), currentConfig)
+	exit((parsingResulut.Flags & config.ErrFlag) == config.ErrFlag)
 }

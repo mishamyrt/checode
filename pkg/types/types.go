@@ -18,7 +18,14 @@ type Match struct {
 // Config map of keyword with error level
 type Config map[string]uint8
 
+// KewordsMap is a map where key is keyword and value is level
 type KewordsMap map[string]string
+
+// ParsingResult for reporters
+type ParsingResult struct {
+	FileMatches []FileMatches
+	Flags       uint8
+}
 
 // ConfigFile is list with keywords and error levels
 type ConfigFile struct {
