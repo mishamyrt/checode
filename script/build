@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+envs=(
+	CGO_ENABLED=0
+	GOGC=off
+)
+
+go_flags=(
+	-a
+	-installsuffix nocgo
+  -o dist/checode
+)
+
+rm -f dist/checode
+env ${envs[@]} go build ${go_flags[@]} checode.go
