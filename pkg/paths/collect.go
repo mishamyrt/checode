@@ -15,31 +15,26 @@ func isAllowedPath(path string) bool {
 	return !strings.Contains(path, ".git/")
 }
 
-func getFiles(path string) (paths []string, err error) {
-	err = filepath.Walk(path,
+// FileList is the list of files
+type FileList []string
+
+func (f *FileList) collectPath(path string) error {
+	return filepath.Walk(path,
 		func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
 			if !info.IsDir() && isAllowedPath(path) {
-				paths = append(paths, path)
+				*f = append(*f, path)
 			}
 			return nil
 		})
-	return
 }
 
-// CollectPaths of files
-func CollectPaths(paths []string) (result []string) {
-	if len(paths) == 0 {
-		paths = append(paths, ".")
-	}
-
+// Collect files from given paths.
+func Collect(paths []string) (list FileList) {
 	for _, path := range paths {
-		files, _ := getFiles(path)
-		if len(files) > 0 {
-			result = append(result, files...)
-		}
+		_ = list.collectPath(path)
 	}
 	return
 }

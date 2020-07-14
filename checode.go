@@ -35,7 +35,15 @@ func main() {
 	parsingResulut := parser.Parsing{
 		Config: config.GetConfig(configPath),
 	}
-	parsingResulut.Run(paths.CollectPaths(pflag.Args()))
+
+	requestedPaths := pflag.Args()
+	if len(requestedPaths) == 0 {
+		requestedPaths = []string{"."}
+	}
+
+	files := paths.Collect(requestedPaths)
+
+	parsingResulut.Run(files)
 	stdout.PrintMatches(&parsingResulut)
 	if len(reportFormat) > 0 {
 		err := reporters.CreateReport(reportFormat, outputFileName, &parsingResulut)
