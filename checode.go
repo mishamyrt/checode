@@ -7,8 +7,9 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
+	"github.com/mishamyrt/checode/v1/pkg/paths"
 	"github.com/mishamyrt/checode/v1/pkg/reporters"
-	"github.com/mishamyrt/checode/v1/pkg/types"
+	"github.com/mishamyrt/checode/v1/pkg/stdout"
 	"github.com/spf13/pflag"
 )
 
@@ -32,10 +33,13 @@ func init() {
 }
 
 func main() {
-	var currentConfig types.Config = config.GetConfig(configPath)
-	parsingResulut := parser.Parse(pflag.Args(), currentConfig)
+	parsingResulut := parser.Parsing{
+		Config: config.GetConfig(configPath),
+	}
+	parsingResulut.Run(paths.CollectPaths(pflag.Args()))
+	stdout.PrintMatches(&parsingResulut)
 	if len(reportFormat) > 0 {
-		err := reporters.CreateReport(reportFormat, outputFileName, parsingResulut)
+		err := reporters.CreateReport(reportFormat, outputFileName, &parsingResulut)
 		if err != nil {
 			fmt.Println(err.Error())
 			exit(false)

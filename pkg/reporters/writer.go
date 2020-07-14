@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/mishamyrt/checode/v1/pkg/types"
+	"github.com/mishamyrt/checode/v1/pkg/parser"
 )
 
 func getTimeStamp() string {
@@ -16,7 +16,7 @@ func getTimeStamp() string {
 // STOPSHIP: Add description
 
 // CreateReport lol
-func CreateReport(extension string, name string, data types.ParsingResult) error {
+func CreateReport(extension string, name string, data *parser.Parsing) error {
 	var reportContent string
 	if len(name) == 0 {
 		name = "report-" + getTimeStamp() + "." + extension

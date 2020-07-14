@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mishamyrt/checode/v1/pkg/types"
+	"github.com/mishamyrt/checode/v1/pkg/parser"
 )
 
 func printLine(n int) string {
@@ -27,7 +27,7 @@ func printMessage(m string) string {
 }
 
 // PrintMatch to stdout
-func PrintMatch(m types.FileMatches) {
+func PrintMatch(m parser.FileMatches) {
 	result := printPath(m.Path)
 	for _, match := range m.Matches {
 		result += printLine(match.Line)
@@ -36,4 +36,10 @@ func PrintMatch(m types.FileMatches) {
 		result += "\n"
 	}
 	fmt.Printf("%s\n", result)
+}
+
+func PrintMatches(res *parser.Parsing) {
+	for _, match := range res.Matches {
+		PrintMatch(match)
+	}
 }
