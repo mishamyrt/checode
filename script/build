@@ -7,10 +7,11 @@ else
   out_file="$1"
 fi
 
-envs="CGO_ENABLED=0 GOGC=off"
+enviroment_vars="CGO_ENABLED=0 GOGC=off"
 go_flags="-a -installsuffix nocgo -o $out_file"
 
 rm -f dist/checode
 
 # Build binary
-env $envs go build $go_flags checode.go
+env $enviroment_vars \
+  go build $go_flags checode.go
