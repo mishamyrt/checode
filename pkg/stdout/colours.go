@@ -15,10 +15,10 @@ func printWithCode(s string, c int) string {
 	return fmt.Sprintf(esc+"["+strconv.Itoa(c)+"m%s"+reset, s)
 }
 
-func colorize(bitmap uint8) func(s string) string {
-	if bit.IsSet(bitmap, config.ErrFlag) {
+func colorize(bitmap bit.Map) func(s string) string {
+	if bitmap.IsSet(config.ErrFlag) {
 		return red
-	} else if bit.IsSet(bitmap, config.WarnFlag) {
+	} else if bitmap.IsSet(config.WarnFlag) {
 		return yellow
 	}
 	return blue

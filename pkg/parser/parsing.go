@@ -3,6 +3,7 @@ package parser
 import (
 	"sync"
 
+	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
@@ -10,7 +11,7 @@ import (
 type Parsing struct {
 	Matches []FileMatches
 	Config  types.Config
-	Flags   uint8
+	Flags   bit.Map
 	mutex   sync.Mutex
 }
 

@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
@@ -12,7 +13,7 @@ import (
 type FileMatches struct {
 	Matches []LineMatch
 	Path    string
-	Flags   uint8
+	Flags   bit.Map
 }
 
 // Parse given reader content

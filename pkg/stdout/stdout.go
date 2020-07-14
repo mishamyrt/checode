@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 )
 
@@ -16,7 +17,7 @@ func printPath(p string) string {
 	return underline(fmt.Sprintln(p))
 }
 
-func printKeywords(k []string, bitmap uint8) (kw string) {
+func printKeywords(k []string, bitmap bit.Map) (kw string) {
 	kw = strings.Join(k, ": ") + ":"
 	kw = colorize(bitmap)(kw)
 	return

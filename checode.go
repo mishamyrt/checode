@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 	"github.com/mishamyrt/checode/v1/pkg/paths"
@@ -45,5 +44,5 @@ func main() {
 			exit(false)
 		}
 	}
-	exit(!bit.IsSet(parsingResulut.Flags, config.ErrFlag))
+	exit(!parsingResulut.Flags.IsSet(config.ErrFlag))
 }

@@ -3,13 +3,14 @@ package parser
 import (
 	"strings"
 
+	"github.com/mishamyrt/checode/v1/pkg/bit"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
 // LineMatch is the line parsing results
 type LineMatch struct {
 	Keywords []string
-	Flags    uint8
+	Flags    bit.Map
 	Line     int
 	Message  string
 }
@@ -38,7 +39,7 @@ func (m *LineMatch) Parse(text string, config *types.Config) {
 			continue
 		}
 		m.Keywords = append(m.Keywords, keyword)
-		m.Flags |= (*config)[keyword]
+		m.Flags |= bit.Map((*config)[keyword])
 
 		// NOTE: Rerun function with stripped line
 		m.Parse(text[keywordIndex+len(keyword)+1:], config)
