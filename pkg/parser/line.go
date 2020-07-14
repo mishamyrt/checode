@@ -33,7 +33,8 @@ func (m *LineMatch) Parse(text string, config *types.Config) {
 		keywordIndex = strings.Index(lineSlice, keyword)
 
 		// NOTE: Skip if keyword not found
-		if keywordIndex == -1 || keywordIndex != (len(lineSlice)-len(keyword)) {
+		expectedOffset := len(lineSlice) - len(keyword)
+		if keywordIndex == -1 || keywordIndex != expectedOffset {
 			continue
 		}
 		m.Keywords = append(m.Keywords, keyword)
