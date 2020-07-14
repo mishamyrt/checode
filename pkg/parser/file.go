@@ -35,11 +35,11 @@ func ParseFile(path string, config *types.Config) FileMatches {
 	matches := FileMatches{Path: path}
 
 	file, err := os.Open(path)
-	defer file.Close()
-
 	if err != nil {
 		return matches
 	}
+
+	defer file.Close()
 	matches.Parse(file, config)
 	return matches
 }
