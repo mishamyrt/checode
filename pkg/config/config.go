@@ -25,7 +25,7 @@ var DefaultConfig = types.Config{
 // GetConfig Reads the custom configuration file, then the file along the standard path.
 // If nothing is found, it returns the standard value.
 func GetConfig(userConfigPath string) types.Config {
-	var result types.Config
+	var result types.Config = make(types.Config)
 	var configPaths = []string{DefaultConfigPath, userConfigPath}
 	var err error
 
