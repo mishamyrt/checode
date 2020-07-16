@@ -44,7 +44,7 @@ func main() {
 	files := paths.Collect(requestedPaths)
 
 	parsingResulut.Run(files)
-	stdout.PrintMatches(&parsingResulut)
+	stdout.Print(&parsingResulut)
 	if len(reportFormat) > 0 {
 		err := reporters.CreateReport(reportFormat, outputFileName, &parsingResulut)
 		if err != nil {

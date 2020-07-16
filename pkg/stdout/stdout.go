@@ -9,6 +9,25 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 )
 
+type Printer struct {
+	result string
+}
+
+func (r *Printer) Flush() {
+	fmt.Print(r.result)
+}
+
+func (r *Printer) AddMatch(m parser.FileMatches) {
+	r.result += printPath(m.Path)
+	for _, match := range m.Matches {
+		r.result += printLine(match.Line)
+		r.result += printKeywords(match.Keywords, match.Flags)
+		r.result += printMessage(match.Message)
+		r.result += "\n"
+	}
+	r.result += "\n"
+}
+
 func printLine(n int) string {
 	return grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
 }
@@ -27,20 +46,10 @@ func printMessage(m string) string {
 	return fmt.Sprintf(" %s", m)
 }
 
-// PrintMatch to stdout
-func PrintMatch(m parser.FileMatches) {
-	result := printPath(m.Path)
-	for _, match := range m.Matches {
-		result += printLine(match.Line)
-		result += printKeywords(match.Keywords, match.Flags)
-		result += printMessage(match.Message)
-		result += "\n"
-	}
-	fmt.Printf("%s\n", result)
-}
-
-func PrintMatches(res *parser.Parsing) {
+func Print(res *parser.Parsing) {
+	var p Printer
 	for _, match := range res.Matches {
-		PrintMatch(match)
+		p.AddMatch(match)
 	}
+	p.Flush()
 }
