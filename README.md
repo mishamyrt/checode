@@ -1,8 +1,18 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/mishamyrt/checode/master/assets/logo@2x.png" width="538px">
-<p><br>
-
-[![Go Report Card](https://goreportcard.com/badge/github.com/mishamyrt/checode)][goreportcard]
+    <img alt="Logo" src="https://raw.githubusercontent.com/mishamyrt/checode/master/assets/logo@2x.png" width="538px">
+<p>
+<br>
+<p align="center">
+    <a href="https://goreportcard.com/report/github.com/mishamyrt/checode">
+        <img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/mishamyrt/checode" />
+    </a>
+    <a href="https://github.com/mishamyrt/checode/blob/master/LICENSE">
+        <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
+    </a>
+    <a href="https://github.com/mishamyrt/checode/actions?query=workflow%3Abuild">
+        <img alt="Build status" src="https://github.com/mishamyrt/checode/workflows/build/badge.svg?branch=master" />
+    </a>
+</p>
 
 Checode extracts, collects and reports TODOs, FIXMEs and other keywords in your code. If you don't know why you should write a comment, look at the [wiki note](https://github.com/mishamyrt/checode/wiki/Maybe-you-don't-really-want-TODO).
 
@@ -52,5 +62,3 @@ To apply a configuration file with a different name, specify it as the parameter
 ```sh
 checode -c custom_config.yaml src/
 ```
-
-[goreportcard]: https://goreportcard.com/report/github.com/mishamyrt/checode
