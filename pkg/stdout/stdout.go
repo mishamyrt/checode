@@ -9,14 +9,17 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/parser"
 )
 
+// Printer is stdout formatter
 type Printer struct {
 	result string
 }
 
+// Flush result to stdout
 func (r *Printer) Flush() {
 	fmt.Print(r.result)
 }
 
+// AddMatch adds match to result
 func (r *Printer) AddMatch(m parser.FileMatches) {
 	r.result += printPath(m.Path)
 	for _, match := range m.Matches {
@@ -46,6 +49,7 @@ func printMessage(m string) string {
 	return fmt.Sprintf(" %s", m)
 }
 
+// Print matches to stdout
 func Print(res *parser.Parsing) {
 	var p Printer
 	for _, match := range res.Matches {
