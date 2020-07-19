@@ -12,7 +12,7 @@ func isAllowedPath(path string) bool {
 	} else if strings.HasSuffix(path, ".md") {
 		return false
 	}
-	return !strings.Contains(path, ".git/")
+	return !strings.Contains(path, ".git"+string(os.PathSeparator))
 }
 
 // FileList is the list of files
