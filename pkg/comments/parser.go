@@ -4,30 +4,11 @@ import (
 	"bufio"
 	"strings"
 
+	"github.com/mishamyrt/checode/v1/pkg/substring"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func trim(text string) string {
-	return strings.Trim(text, "\n\t *")
-}
-
-func getSubsequent(delimeter string, text string) string {
-	offset := strings.Index(text, delimeter)
-	if offset < 0 {
-		return ""
-	}
-	return text[offset+len(delimeter):]
-}
-
-func getPrevious(delimeter string, text string) string {
-	offset := strings.Index(text, delimeter)
-	if offset < 0 {
-		return ""
-	}
-	return text[:offset]
-}
-
-func includes(haystack string, needle string) bool {
+func contains(haystack string, needle string) bool {
 	return strings.Index(haystack, needle) >= 0
 }
 
@@ -43,10 +24,10 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 		lineNumber++
 		line = s.Text()
 
-		if includes(line, set.MultilineEnd) {
+		if contains(line, set.MultilineEnd) {
 			inMultiline = false
-			comment += getPrevious(set.MultilineEnd, line)
-			results = append(results, trim(comment))
+			comment += substring.GetSubsequent(set.MultilineEnd, line)
+			results = append(results, substring.Trim(comment))
 			comment = ""
 			continue
 		} else if inMultiline {
@@ -54,14 +35,16 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 			continue
 		}
 
-		if includes(line, set.MultilineStart) {
+		if contains(line, set.MultilineStart) {
 			inMultiline = true
-			comment += getSubsequent(set.MultilineStart, line)
+			comment += substring.GetSubsequent(set.MultilineStart, line)
 			continue
 		}
 
-		if includes(line, set.Inline) {
-			results = append(results, trim(getSubsequent(set.Inline, line)))
+		if contains(line, set.Inline) {
+			results = append(results,
+				substring.Trim(
+					substring.GetSubsequent(set.Inline, line)))
 		}
 	}
 	return results
