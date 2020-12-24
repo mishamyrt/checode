@@ -1,4 +1,4 @@
-.PHONY: lint clear docker-image
+.PHONY: lint clear docker-image test
 
 GC = go build
 GO_FLAGS = CGO_ENABLED=0 GOGC=off
@@ -11,6 +11,9 @@ dist:
 	make dist/checode_darwin64
 	make dist/checode_linux64
 	make dist/checode_windows64.exe
+
+test:
+	go test ./... -test.v
 
 clear:
 	rm -rf dist
