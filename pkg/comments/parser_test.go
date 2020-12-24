@@ -42,10 +42,12 @@ func Suite(t *testing.T, parse CommentParser) {
 	for _, c := range Cases {
 		res := parse(scannerFrom(c.Text), c.Set)
 		if len(res) != c.Count {
+			t.Errorf("Wrong count: %d vs %d", len(res), c.Count)
 			t.Fail()
 		}
 		for _, comment := range res {
 			if comment != "Comment" {
+				t.Errorf("Wrong text: \"%s\"", comment)
 				t.Fail()
 			}
 		}
