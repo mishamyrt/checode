@@ -10,3 +10,10 @@ type KewordsMap map[string]string
 type ConfigFile struct {
 	Keywords KewordsMap
 }
+
+// CommentSymbolSet is language-specific symbol set
+type CommentSymbolSet struct {
+	Inline         string
+	MultilineStart string
+	MultilineEnd   string
+}
