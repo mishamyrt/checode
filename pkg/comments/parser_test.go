@@ -9,6 +9,8 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
+type CommentParser func(s *bufio.Scanner, set types.CommentSymbolSet) []string
+
 type TestCase struct {
 	Count int
 	Text  string
@@ -31,8 +33,6 @@ var Cases = []TestCase{{
 		Comment
 		*/`,
 }}
-
-type CommentParser func(s *bufio.Scanner, set types.CommentSymbolSet) []string
 
 func scannerFrom(input string) *bufio.Scanner {
 	return bufio.NewScanner(strings.NewReader(input))
