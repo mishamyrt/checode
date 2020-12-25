@@ -24,7 +24,7 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 		lineNumber++
 		line = s.Text()
 
-		if contains(line, set.MultilineEnd) {
+		if inMultiline && contains(line, set.MultilineEnd) {
 			inMultiline = false
 			comment += substring.GetSubsequent(set.MultilineEnd, line)
 			results = append(results, substring.Trim(comment))
