@@ -13,7 +13,7 @@ dist:
 	make dist/checode_windows64.exe
 
 test:
-	go test ./... -test.v
+	richgo test ./...
 
 clear:
 	rm -rf dist
