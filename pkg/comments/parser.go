@@ -2,6 +2,7 @@ package comments
 
 import (
 	"bufio"
+	"fmt"
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/substring"
@@ -20,13 +21,27 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 	comment := ""
 	inMultiline := false
 
+	hasInline := len(set.Inline) > 0
+
 	for s.Scan() {
 		lineNumber++
 		line = s.Text()
 
+		if !inMultiline && contains(line, set.MultilineStart) {
+			subLine := substring.GetSubsequent(set.MultilineStart, line)
+			if contains(subLine, set.MultilineEnd) {
+				results = append(results, substring.Trim(
+					substring.GetPrevious(set.MultilineEnd, subLine)))
+			} else {
+				inMultiline = true
+				comment += substring.GetSubsequent(set.MultilineStart, line)
+			}
+			continue
+		}
+
 		if inMultiline && contains(line, set.MultilineEnd) {
 			inMultiline = false
-			comment += substring.GetSubsequent(set.MultilineEnd, line)
+			comment += substring.GetPrevious(set.MultilineEnd, line)
 			results = append(results, substring.Trim(comment))
 			comment = ""
 			continue
@@ -35,17 +50,12 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 			continue
 		}
 
-		if contains(line, set.MultilineStart) {
-			inMultiline = true
-			comment += substring.GetSubsequent(set.MultilineStart, line)
-			continue
-		}
-
-		if contains(line, set.Inline) {
+		if hasInline && contains(line, set.Inline) {
 			results = append(results,
 				substring.Trim(
 					substring.GetSubsequent(set.Inline, line)))
 		}
 	}
+	fmt.Println(results)
 	return results
 }

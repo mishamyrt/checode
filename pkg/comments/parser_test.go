@@ -17,28 +17,45 @@ type TestCase struct {
 	Set   types.CommentSymbolSet
 }
 
-var Cases = []TestCase{{
-	Set: types.CommentSymbolSet{
-		Inline:         "//",
-		MultilineStart: "/*",
-		MultilineEnd:   "*/",
+var Cases = []TestCase{
+	{
+		// For the first case, I set a symbol set directly to test the algorithm itself, not the data
+		Set: types.CommentSymbolSet{
+			Inline:         "//",
+			MultilineStart: "/*",
+			MultilineEnd:   "*/",
+		},
+		Count: 3,
+		Text: `
+			// Comment
+			/*
+			* Comment
+			*/
+			/*
+			Comment
+			*/`,
 	},
-	Count: 3,
-	Text: `
-		// Comment
-		/*
-		* Comment
-		*/
-		/*
-		Comment
-		*/`,
-}}
+	{
+		Set:   comments.CommentSymbols["python"],
+		Count: 2,
+		Text: `
+			# Comment
+			'''
+			Comment
+			'''`,
+	},
+	{
+		Set:   comments.CommentSymbols["html"],
+		Count: 1,
+		Text:  "<!-- Comment -->",
+	},
+}
 
 func scannerFrom(input string) *bufio.Scanner {
 	return bufio.NewScanner(strings.NewReader(input))
 }
 
-func Suite(t *testing.T, parse CommentParser) {
+func ParseSuite(t *testing.T, parse CommentParser) {
 	for _, c := range Cases {
 		res := parse(scannerFrom(c.Text), c.Set)
 		if len(res) != c.Count {
@@ -47,7 +64,7 @@ func Suite(t *testing.T, parse CommentParser) {
 		}
 		for _, comment := range res {
 			if comment != "Comment" {
-				t.Errorf("Wrong text: \"%s\"", comment)
+				t.Errorf("Wrong text: \"%s\" from \"%s\"", comment, c.Text)
 				t.Fail()
 			}
 		}
@@ -55,5 +72,5 @@ func Suite(t *testing.T, parse CommentParser) {
 }
 
 func TestParse(t *testing.T) {
-	Suite(t, comments.Parse)
+	ParseSuite(t, comments.Parse)
 }
