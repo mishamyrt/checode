@@ -10,6 +10,7 @@ type Trimmer func(text string) string
 
 type Subsequenter func(delimeter string, text string) string
 type Previouser func(delimeter string, text string) string
+type Midster func(startDel string, endDel string, text string) string
 
 func TrimSuite(t *testing.T, trim Trimmer) {
 	res := trim(" * Test 	")
@@ -35,6 +36,14 @@ func PreviousSuite(t *testing.T, prev Previouser) {
 	}
 }
 
+func MidstSuite(t *testing.T, midst Midster) {
+	res := midst("<", ">", "junk <Test> junk")
+	if res != "Test" {
+		t.Errorf("Wrong midst: \"%s\"", res)
+		t.Fail()
+	}
+}
+
 func TestTrim(t *testing.T) {
 	TrimSuite(t, substring.Trim)
 }
@@ -45,4 +54,8 @@ func TestSubsequent(t *testing.T) {
 
 func TestPrevious(t *testing.T) {
 	PreviousSuite(t, substring.GetPrevious)
+}
+
+func TestMidst(t *testing.T) {
+	MidstSuite(t, substring.GetMidst)
 }
