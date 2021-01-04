@@ -37,7 +37,7 @@ func PreviousSuite(t *testing.T, prev Previouser) {
 }
 
 func MidstSuite(t *testing.T, midst Midster) {
-	res := midst("<", ">", "junk <Test> junk")
+	res := midst("<!--", "-->", "<!--Test-->")
 	if res != "Test" {
 		t.Errorf("Wrong midst: \"%s\"", res)
 		t.Fail()
