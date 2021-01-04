@@ -2,10 +2,10 @@ package comments_test
 
 import (
 	"bufio"
-	"strings"
 	"testing"
 
 	"github.com/mishamyrt/checode/v1/pkg/comments"
+	"github.com/mishamyrt/checode/v1/pkg/inner_testing"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
@@ -51,13 +51,9 @@ var Cases = []TestCase{
 	},
 }
 
-func scannerFrom(input string) *bufio.Scanner {
-	return bufio.NewScanner(strings.NewReader(input))
-}
-
 func ParseSuite(t *testing.T, parse CommentParser) {
 	for _, c := range Cases {
-		res := parse(scannerFrom(c.Text), c.Set)
+		res := parse(inner_testing.ScannerFrom(c.Text), c.Set)
 		if len(res) != c.Count {
 			t.Errorf("Wrong count: %d vs %d", len(res), c.Count)
 			t.Fail()
