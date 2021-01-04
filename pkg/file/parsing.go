@@ -1,4 +1,4 @@
-package parser
+package file
 
 import (
 	"sync"
@@ -9,14 +9,14 @@ import (
 
 // Parsing results
 type Parsing struct {
-	Matches []FileMatches
+	Matches []Matches
 	Config  types.Config
 	Flags   bit.Map
 	mutex   sync.Mutex
 }
 
 // Append match to parsing
-func (p *Parsing) Append(file FileMatches) {
+func (p *Parsing) Append(file Matches) {
 	p.mutex.Lock()
 	defer p.mutex.Unlock()
 
