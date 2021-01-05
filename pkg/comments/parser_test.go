@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/mishamyrt/checode/v1/pkg/comments"
-	"github.com/mishamyrt/checode/v1/pkg/inner_testing"
+	"github.com/mishamyrt/checode/v1/pkg/testhelpers"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
@@ -53,7 +53,7 @@ var Cases = []TestCase{
 
 func ParseSuite(t *testing.T, parse CommentParser) {
 	for _, c := range Cases {
-		res := parse(inner_testing.ScannerFrom(c.Text), c.Set)
+		res := parse(testhelpers.ScannerFrom(c.Text), c.Set)
 		if len(res) != c.Count {
 			t.Errorf("Wrong count: %d vs %d", len(res), c.Count)
 			t.Fail()

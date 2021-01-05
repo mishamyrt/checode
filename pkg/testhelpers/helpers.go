@@ -1,4 +1,4 @@
-package inner_testing
+package testhelpers
 
 import (
 	"bufio"
