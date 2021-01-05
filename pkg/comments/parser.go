@@ -2,7 +2,6 @@ package comments
 
 import (
 	"bufio"
-	"fmt"
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/substring"
@@ -56,6 +55,5 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 					substring.GetSubsequent(set.Inline, line)))
 		}
 	}
-	fmt.Println(results)
 	return results
 }
