@@ -9,7 +9,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-type CommentParser func(s *bufio.Scanner, set types.CommentSymbolSet) []string
+type CommentParser func(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments
 
 type TestCase struct {
 	Count int
@@ -59,8 +59,8 @@ func ParseSuite(t *testing.T, parse CommentParser) {
 			t.Fail()
 		}
 		for _, comment := range res {
-			if comment != "Comment" {
-				t.Errorf("Wrong text: \"%s\" from \"%s\"", comment, c.Text)
+			if comment.Text != "Comment" {
+				t.Errorf("Wrong text: \"%s\" from \"%s\"", comment.Text, c.Text)
 				t.Fail()
 			}
 		}

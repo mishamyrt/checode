@@ -17,7 +17,7 @@ var ExtensionsCommentSet = map[string]types.CommentSymbolSet{
 }
 
 func getSetByExtension(ext string) (types.CommentSymbolSet, error) {
-	if val, ok := ExtensionsCommentSet[ext]; ok {
+	if val, ok := ExtensionsCommentSet[ext[1:]]; ok {
 		return val, nil
 	}
 	return types.CommentSymbolSet{}, errors.New("Value not found")

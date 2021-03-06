@@ -11,6 +11,11 @@ type ConfigFile struct {
 	Keywords KewordsMap
 }
 
+type FileComments struct {
+	Line int
+	Text string
+}
+
 // CommentSymbolSet is language-specific symbol set
 type CommentSymbolSet struct {
 	Inline         string

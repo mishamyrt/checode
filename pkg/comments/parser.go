@@ -13,9 +13,10 @@ func contains(haystack string, needle string) bool {
 }
 
 // Parse comments from given scanner
-func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
-	var results []string
+func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments {
+	var results []types.FileComments
 	lineNumber := 0
+	multilineStart := 0
 	line := ""
 	comment := ""
 	inMultiline := false
@@ -29,11 +30,15 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 		if !inMultiline && contains(line, set.MultilineStart) {
 			subLine := substring.GetSubsequent(set.MultilineStart, line)
 			if contains(subLine, set.MultilineEnd) {
-				results = append(results, substring.Trim(
-					substring.GetPrevious(set.MultilineEnd, subLine)))
+				results = append(results, types.FileComments{
+					Text: substring.Trim(
+						substring.GetPrevious(set.MultilineEnd, subLine)),
+					Line: lineNumber,
+				})
 			} else {
 				inMultiline = true
-				comment += substring.GetSubsequent(set.MultilineStart, line)
+				multilineStart = lineNumber
+				comment += substring.GetSubsequent(set.MultilineStart, line) + "\n"
 			}
 			continue
 		}
@@ -41,18 +46,24 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []string {
 		if inMultiline && contains(line, set.MultilineEnd) {
 			inMultiline = false
 			comment += substring.GetPrevious(set.MultilineEnd, line)
-			results = append(results, substring.Trim(comment))
+			results = append(results, types.FileComments{
+				Text: substring.Trim(comment),
+				Line: multilineStart,
+			})
 			comment = ""
 			continue
 		} else if inMultiline {
-			comment += line
+			comment += line + "\n"
 			continue
 		}
 
 		if hasInline && contains(line, set.Inline) {
 			results = append(results,
-				substring.Trim(
-					substring.GetSubsequent(set.Inline, line)))
+				types.FileComments{
+					Text: substring.Trim(
+						substring.GetSubsequent(set.Inline, line)),
+					Line: lineNumber,
+				})
 		}
 	}
 	return results

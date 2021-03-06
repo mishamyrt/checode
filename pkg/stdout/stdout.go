@@ -6,18 +6,21 @@ import (
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
-	"github.com/mishamyrt/checode/v1/pkg/parser"
+	"github.com/mishamyrt/checode/v1/pkg/file"
 )
 
+// Printer represents CLI writer
 type Printer struct {
 	result string
 }
 
+// Flush results to CLI
 func (r *Printer) Flush() {
 	fmt.Print(r.result)
 }
 
-func (r *Printer) AddMatch(m parser.FileMatches) {
+// AddMatch to result
+func (r *Printer) AddMatch(m file.Matches) {
 	r.result += printPath(m.Path)
 	for _, match := range m.Matches {
 		r.result += printLine(match.Line)
@@ -43,10 +46,18 @@ func printKeywords(k []string, bitmap bit.Map) (kw string) {
 }
 
 func printMessage(m string) string {
+	if strings.Contains(m, "\n") {
+		result := "\n"
+		for _, line := range strings.Split(m, "\n") {
+			result += fmt.Sprintf("    %s", line) + "\n"
+		}
+		return result
+	}
 	return fmt.Sprintf(" %s", m)
 }
 
-func Print(res *parser.Parsing) {
+// Print parsing result to CLI
+func Print(res *file.Parsing) {
 	var p Printer
 	for _, match := range res.Matches {
 		p.AddMatch(match)

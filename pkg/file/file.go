@@ -25,13 +25,14 @@ func Parse(file io.Reader, config *types.Config, set types.CommentSymbolSet) (m 
 	r := comments.Parse(scanner, set)
 	var match warnings.Match
 	for _, s := range r {
-		if len(s) == 0 {
+		if len(s.Text) == 0 {
 			continue
 		}
-		match.Parse(s, config)
+		match.Parse(s.Text, config)
 		if len(match.Keywords) == 0 {
 			continue
 		}
+		match.Line = s.Line
 		m.Flags |= match.Flags
 		m.Matches = append(m.Matches, match)
 	}
@@ -40,6 +41,7 @@ func Parse(file io.Reader, config *types.Config, set types.CommentSymbolSet) (m 
 
 // ParseFile parses given file
 func ParseFile(path string, config *types.Config) (matches Matches) {
+	// fmt.Println(path)
 	file, err := os.Open(path)
 	if err != nil {
 		return
