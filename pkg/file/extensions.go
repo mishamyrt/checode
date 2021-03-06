@@ -10,7 +10,9 @@ import (
 // ExtensionsCommentSet is map with file extensions and comment sets
 var ExtensionsCommentSet = map[string]types.CommentSymbolSet{
 	"js":   comments.CommentSymbols["c-style"],
+	"jsx":  comments.CommentSymbols["c-style"],
 	"ts":   comments.CommentSymbols["c-style"],
+	"tsx":  comments.CommentSymbols["c-style"],
 	"go":   comments.CommentSymbols["c-style"],
 	"py":   comments.CommentSymbols["python"],
 	"html": comments.CommentSymbols["html"],
