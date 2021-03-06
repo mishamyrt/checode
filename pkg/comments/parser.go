@@ -8,10 +8,6 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func contains(haystack string, needle string) bool {
-	return strings.Index(haystack, needle) >= 0
-}
-
 // Parse comments from given scanner
 func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments {
 	var results []types.FileComments
@@ -27,9 +23,9 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments {
 		lineNumber++
 		line = s.Text()
 
-		if !inMultiline && contains(line, set.MultilineStart) {
+		if !inMultiline && strings.Contains(line, set.MultilineStart) {
 			subLine := substring.GetSubsequent(set.MultilineStart, line)
-			if contains(subLine, set.MultilineEnd) {
+			if strings.Contains(subLine, set.MultilineEnd) {
 				results = append(results, types.FileComments{
 					Text: substring.Trim(
 						substring.GetPrevious(set.MultilineEnd, subLine)),
@@ -43,7 +39,7 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments {
 			continue
 		}
 
-		if inMultiline && contains(line, set.MultilineEnd) {
+		if inMultiline && strings.Contains(line, set.MultilineEnd) {
 			inMultiline = false
 			comment += substring.GetPrevious(set.MultilineEnd, line)
 			results = append(results, types.FileComments{
@@ -57,7 +53,7 @@ func Parse(s *bufio.Scanner, set types.CommentSymbolSet) []types.FileComments {
 			continue
 		}
 
-		if hasInline && contains(line, set.Inline) {
+		if hasInline && strings.Contains(line, set.Inline) {
 			results = append(results,
 				types.FileComments{
 					Text: substring.Trim(
