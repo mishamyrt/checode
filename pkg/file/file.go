@@ -23,8 +23,8 @@ type Matches struct {
 func Parse(file io.Reader, config *types.Config, set types.CommentSymbolSet) (m Matches) {
 	scanner := bufio.NewScanner(file)
 	r := comments.Parse(scanner, set)
-	var match warnings.Match
 	for _, s := range r {
+		var match warnings.Match
 		if len(s.Text) == 0 {
 			continue
 		}
