@@ -35,3 +35,6 @@ dist/checode_windows64.exe:
 
 docker-image:
 	docker build --pull --target checode .
+
+lint:
+	golangci-lint run
