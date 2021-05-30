@@ -6,21 +6,31 @@ import (
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
-	"github.com/mishamyrt/checode/v1/pkg/colours"
+	"github.com/mishamyrt/checode/v1/pkg/colors"
+	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/file"
 )
 
-// Printer represents CLI writer
+func colorize(bitmap bit.Map) func(s string) string {
+	if bitmap.IsSet(config.ErrFlag) {
+		return colors.Red
+	} else if bitmap.IsSet(config.WarnFlag) {
+		return colors.Yellow
+	}
+	return colors.Blue
+}
+
+// Printer represents CLI writer.
 type Printer struct {
 	result string
 }
 
-// Flush results to CLI
+// Flush results to CLI.
 func (r *Printer) Flush() {
 	fmt.Print(r.result)
 }
 
-// AddMatch to result
+// AddMatch to result.
 func (r *Printer) AddMatch(m file.Matches) {
 	r.result += printPath(m.Path)
 	for _, match := range m.Matches {
@@ -33,11 +43,11 @@ func (r *Printer) AddMatch(m file.Matches) {
 }
 
 func printLine(n int) string {
-	return colours.Grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
+	return colors.Grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
 }
 
 func printPath(p string) string {
-	return colours.Underline(fmt.Sprintln(p))
+	return colors.Underline(fmt.Sprintln(p))
 }
 
 func printKeywords(k []string, bitmap bit.Map) (kw string) {
@@ -57,7 +67,7 @@ func printMessage(m string) string {
 	return fmt.Sprintf(" %s", m)
 }
 
-// Print parsing result to CLI
+// Print parsing result to CLI.
 func Print(res *file.Parsing) {
 	var p Printer
 	for _, match := range res.Matches {

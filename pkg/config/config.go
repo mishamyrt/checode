@@ -5,16 +5,16 @@ import (
 )
 
 const (
-	// WarnFlag is a flag for warning level
+	// WarnFlag is a flag for warning level.
 	WarnFlag = 1
-	// ErrFlag is a flag for error level
+	// ErrFlag is a flag for error level.
 	ErrFlag = 2
 )
 
-// DefaultConfigPath is allowed configuration file names
+// DefaultConfigPath is allowed configuration file names.
 const DefaultConfigPath = ".checode.yaml"
 
-// DefaultConfig is a built-in basic configuration
+// DefaultConfig is a built-in basic configuration.
 var DefaultConfig = types.Config{
 	"STOPSHIP": ErrFlag,
 	"FIXME":    WarnFlag,
@@ -30,7 +30,7 @@ func GetConfig(userConfigPath string) types.Config {
 	var err error
 
 	for _, path := range configPaths {
-		if len(path) == 0 {
+		if path == "" {
 			continue
 		}
 		err = ReadConfigFile(path, &result)

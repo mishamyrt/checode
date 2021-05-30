@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	// ErrKeyword key
+	// ErrKeyword key.
 	ErrKeyword = "err"
-	// WarnKeyword key
+	// WarnKeyword key.
 	WarnKeyword = "warn"
 )
 
@@ -27,14 +27,14 @@ func parseFlag(value string) uint8 {
 	}
 }
 
-// ParseFlags transforms text map to bit values
+// ParseFlags transforms text map to bit values.
 func ParseFlags(config *types.Config, configMap *types.KewordsMap) {
 	for key := range *configMap {
 		(*config)[key] = parseFlag((*configMap)[key])
 	}
 }
 
-// ReadConfigFile reads the configuration from the yaml file
+// ReadConfigFile reads the configuration from the yaml file.
 func ReadConfigFile(path string, config *types.Config) (err error) {
 	if fileExists(path) {
 		var configFile types.ConfigFile
@@ -44,7 +44,7 @@ func ReadConfigFile(path string, config *types.Config) (err error) {
 		}
 		ParseFlags(config, &configFile.Keywords)
 	} else {
-		err = errors.New("File doesn't exist")
+		err = errors.New("file doesn't exist")
 	}
 	return
 }

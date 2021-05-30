@@ -7,7 +7,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-// Parsing results
+// Parsing results.
 type Parsing struct {
 	Matches []Matches
 	Config  types.Config
@@ -15,7 +15,7 @@ type Parsing struct {
 	mutex   sync.Mutex
 }
 
-// Append match to parsing
+// Append match to parsing.
 func (p *Parsing) Append(file Matches) {
 	p.mutex.Lock()
 	defer p.mutex.Unlock()
@@ -24,7 +24,7 @@ func (p *Parsing) Append(file Matches) {
 	p.Flags |= file.Flags
 }
 
-// Run parsing
+// Run parsing.
 func (p *Parsing) Run(files []string) {
 	var wg sync.WaitGroup
 	wg.Add(len(files))
@@ -36,7 +36,6 @@ func (p *Parsing) Run(files []string) {
 			if len(file.Matches) > 0 {
 				p.Append(file)
 			}
-
 		}(path)
 	}
 	wg.Wait()

@@ -8,6 +8,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/file"
 	"github.com/mishamyrt/checode/v1/pkg/testhelpers"
 	"github.com/mishamyrt/checode/v1/pkg/types"
+
 	"github.com/mishamyrt/compars/pkg/symbols"
 )
 

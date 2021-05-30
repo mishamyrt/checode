@@ -8,7 +8,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-func findKeyword(a *types.Config, x string) (string, uint8) {
+func findKeyword(a *types.Config, x string) (keyword string, flag uint8) {
 	for i, m := range *a {
 		if x == i {
 			return i, m
@@ -17,7 +17,7 @@ func findKeyword(a *types.Config, x string) (string, uint8) {
 	return "", 0
 }
 
-// Match is basic TODO, FIXME, etc message
+// Match is basic TODO, FIXME, etc message.
 type Match struct {
 	Keywords []string
 	Flags    bit.Map
@@ -25,7 +25,7 @@ type Match struct {
 	Message  string
 }
 
-// Parse keywords from given string
+// Parse keywords from given string.
 func (m *Match) Parse(s string, config *types.Config) {
 	index := strings.Index(s, ":")
 	if index < 0 {

@@ -15,7 +15,7 @@ func isAllowedPath(path string) bool {
 	return !strings.Contains(path, ".git/")
 }
 
-// FileList is the list of files
+// FileList is the list of files.
 type FileList []string
 
 func (f *FileList) collectPath(path string) error {
