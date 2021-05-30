@@ -2,14 +2,17 @@ package file
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
-	"github.com/mishamyrt/checode/v1/pkg/comments"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 	"github.com/mishamyrt/checode/v1/pkg/warnings"
+	"github.com/mishamyrt/compars"
+	"github.com/mishamyrt/compars/pkg/symbols"
+	ctypes "github.com/mishamyrt/compars/pkg/types"
 )
 
 // Matches is the line file results
@@ -20,9 +23,9 @@ type Matches struct {
 }
 
 // Parse given reader content
-func Parse(file io.Reader, config *types.Config, set types.CommentSymbolSet) (m Matches) {
+func Parse(file io.Reader, config *types.Config, set ctypes.CommentSymbolSet) (m Matches) {
 	scanner := bufio.NewScanner(file)
-	r := comments.Parse(scanner, set)
+	r := compars.Parse(scanner, set)
 	for _, s := range r {
 		var match warnings.Match
 		if len(s.Text) == 0 {
@@ -46,8 +49,14 @@ func ParseFile(path string, config *types.Config) (matches Matches) {
 	if err != nil {
 		return
 	}
-	set, err := getSetByExtension(filepath.Ext(path))
+	ext := filepath.Ext(path)
+	if len(ext) == 0 {
+		return
+	}
+	set, err := symbols.GetSetByExtension(ext)
 	if err != nil {
+		// FIXME: Output should be colored.
+		fmt.Println("Unknown extension ", ext)
 		return
 	}
 	matches = Parse(file, config, set)
