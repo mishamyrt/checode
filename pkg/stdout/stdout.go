@@ -6,18 +6,18 @@ import (
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
-	"github.com/mishamyrt/checode/v1/pkg/colors"
 	"github.com/mishamyrt/checode/v1/pkg/config"
 	"github.com/mishamyrt/checode/v1/pkg/file"
+	"github.com/mishamyrt/checode/v1/pkg/format"
 )
 
 func colorize(bitmap bit.Map) func(s string) string {
 	if bitmap.IsSet(config.ErrFlag) {
-		return colors.Red
+		return format.Red
 	} else if bitmap.IsSet(config.WarnFlag) {
-		return colors.Yellow
+		return format.Yellow
 	}
-	return colors.Blue
+	return format.Blue
 }
 
 // Printer represents CLI writer.
@@ -43,11 +43,11 @@ func (r *Printer) AddMatch(m file.Matches) {
 }
 
 func printLine(n int) string {
-	return colors.Grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
+	return format.Grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
 }
 
 func printPath(p string) string {
-	return colors.Underline(fmt.Sprintln(p))
+	return format.Underline(fmt.Sprintln(p))
 }
 
 func printKeywords(k []string, bitmap bit.Map) (kw string) {
