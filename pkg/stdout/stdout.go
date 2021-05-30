@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
+	"github.com/mishamyrt/checode/v1/pkg/colours"
 	"github.com/mishamyrt/checode/v1/pkg/file"
 )
 
@@ -32,11 +33,11 @@ func (r *Printer) AddMatch(m file.Matches) {
 }
 
 func printLine(n int) string {
-	return grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
+	return colours.Grey(fmt.Sprintf("  %-5s", strconv.Itoa(n)))
 }
 
 func printPath(p string) string {
-	return underline(fmt.Sprintln(p))
+	return colours.Underline(fmt.Sprintln(p))
 }
 
 func printKeywords(k []string, bitmap bit.Map) (kw string) {

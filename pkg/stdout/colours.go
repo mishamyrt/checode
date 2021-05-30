@@ -1,45 +1,16 @@
 package stdout
 
 import (
-	"fmt"
-	"strconv"
-
 	"github.com/mishamyrt/checode/v1/pkg/bit"
+	"github.com/mishamyrt/checode/v1/pkg/colours"
 	"github.com/mishamyrt/checode/v1/pkg/config"
 )
 
-var esc = "\033"
-var reset = esc + "[0m"
-
-func printWithCode(s string, c int) string {
-	return fmt.Sprintf(esc+"["+strconv.Itoa(c)+"m%s"+reset, s)
-}
-
 func colorize(bitmap bit.Map) func(s string) string {
 	if bitmap.IsSet(config.ErrFlag) {
-		return red
+		return colours.Red
 	} else if bitmap.IsSet(config.WarnFlag) {
-		return yellow
+		return colours.Yellow
 	}
-	return blue
-}
-
-func grey(s string) string {
-	return printWithCode(s, 2)
-}
-
-func underline(s string) string {
-	return printWithCode(s, 4)
-}
-
-func red(s string) string {
-	return printWithCode(s, 31)
-}
-
-func yellow(s string) string {
-	return printWithCode(s, 33)
-}
-
-func blue(s string) string {
-	return printWithCode(s, 34)
+	return colours.Blue
 }

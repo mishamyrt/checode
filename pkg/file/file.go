@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
+	"github.com/mishamyrt/checode/v1/pkg/colours"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 	"github.com/mishamyrt/checode/v1/pkg/warnings"
 	"github.com/mishamyrt/compars"
@@ -44,7 +45,6 @@ func Parse(file io.Reader, config *types.Config, set ctypes.CommentSymbolSet) (m
 
 // ParseFile parses given file
 func ParseFile(path string, config *types.Config) (matches Matches) {
-	// fmt.Println(path)
 	file, err := os.Open(path)
 	if err != nil {
 		return
@@ -55,8 +55,7 @@ func ParseFile(path string, config *types.Config) (matches Matches) {
 	}
 	set, err := symbols.GetSetByExtension(ext)
 	if err != nil {
-		// FIXME: Output should be colored.
-		fmt.Println("Unknown extension ", ext)
+		fmt.Println(colours.Yellow("Unknown extension: " + ext))
 		return
 	}
 	matches = Parse(file, config, set)
