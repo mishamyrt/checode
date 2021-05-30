@@ -2,13 +2,11 @@ package file
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"os"
 	"path/filepath"
 
 	"github.com/mishamyrt/checode/v1/pkg/bit"
-	"github.com/mishamyrt/checode/v1/pkg/colors"
 	"github.com/mishamyrt/checode/v1/pkg/types"
 	"github.com/mishamyrt/checode/v1/pkg/warnings"
 
@@ -57,8 +55,8 @@ func ParseFile(path string, config *types.Config) (matches Matches) {
 	}
 	set, err := symbols.GetSetByExtension(ext)
 	if err != nil {
-		fmt.Println(colors.Yellow("Unknown extension: " + ext))
-		return
+		// NOTE: Fallback to script (#) format
+		set, _ = symbols.GetSetByExtension(".sh")
 	}
 	matches = Parse(file, config, set)
 	matches.Path = path
