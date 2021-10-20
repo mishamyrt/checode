@@ -8,7 +8,9 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/types"
 )
 
-var commands = []commandHandler{}
+var commands = []commandHandler{
+	DueHandler,
+}
 
 // Match is basic TODO, FIXME, etc message.
 type Match struct {
