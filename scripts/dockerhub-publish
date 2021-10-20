@@ -3,7 +3,7 @@ if [ -z "$dockerhub_password" ]; then
   echo "\$dockerhub_password variable is not set"
   exit 1
 fi
-docker buildx create --driver-opt image=moby/buildkit:master
+docker buildx create --use
 echo $dockerhub_password | docker login --username mishamyrt --password-stdin
 docker buildx build \
   --push \
