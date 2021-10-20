@@ -37,6 +37,7 @@ keywords:
   TODO: warn
   FIXME: err
   STOPSHIP: err
+  NOTE: info
 ```
 
 Using the configuration file, you can add processing of any keywords.
@@ -52,5 +53,22 @@ To apply a configuration file with a different name, specify it as the parameter
 ```sh
 checode -c custom_config.yaml src/
 ```
+
+## Commands
+
+In addition to normal comments, you can make comments with logic. The commands are triggered as follows:
+
+```ts
+// <KEYWORD>:: <command> <argument>: <message> 
+```
+
+For example:
+```ts
+// FIXME:: due 2021-10-20: Remove this dirty hack after the demonstration.
+```
+
+### Available commands
+
+* `due` — Limits the date until which this comment will not be considered an error. Raises the comment level to `err` if the specified date is greater than or equal to the current date. Accepts the date in `yyyy-mm-dd` format.
 
 [goreportcard]: https://goreportcard.com/report/github.com/mishamyrt/checode
