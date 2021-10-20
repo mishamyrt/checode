@@ -1,0 +1,19 @@
+name: DockerHub deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Publish:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run publish scripts
+        env:
+          dockerhub_password: ${{ secrets.DOCKERHUB_PAT }}
+        run: ./scripts/dockerhub-publish
+
