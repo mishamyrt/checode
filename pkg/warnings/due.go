@@ -8,7 +8,7 @@ import (
 	"github.com/mishamyrt/checode/v1/pkg/format"
 )
 
-func handleDue(m *Match, argument string, message string) (result string) {
+func handleDue(m *Match, argument, message string) (result string) {
 	result = message + format.Grey(" | ")
 	date, err := dates.ParseShort(argument)
 	if err != nil {
