@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -z "$dockerhub_password" ]; then
+  echo "\$dockerhub_password variable is not set"
+  exit 1
+fi
+echo $dockerhub_password | docker login --username mishamyrt --password-stdin
+docker buildx build \
+  --push \
+  --platform linux/amd64,linux/arm64 \
+  --output=type=image,push=true,registry.insecure=true \
+  --tag mishamyrt/checode:latest .
