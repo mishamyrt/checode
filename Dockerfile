@@ -5,7 +5,7 @@ FROM golang:${GO_VERSION_ARG}-alpine${ALPINE_VERSION_ARG} AS gobuildder
 WORKDIR /go/src
 COPY . .
 RUN go get
-RUN ./script/build /go/checode
+RUN ./scripts/build /go/checode
 
 FROM alpine:${ALPINE_VERSION_ARG} AS checode
 COPY --from=gobuildder /go/checode /bin/checode
