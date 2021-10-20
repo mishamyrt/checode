@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Create buildx container
-        run: docker buildx create --use
+        run: docker buildx create --driver-opt image=moby/buildkit:master --use
       - name: Run publish scripts
         env:
           dockerhub_password: ${{ secrets.DOCKERHUB_PAT }}
